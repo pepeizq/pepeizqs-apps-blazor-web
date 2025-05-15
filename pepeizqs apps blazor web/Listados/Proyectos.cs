@@ -123,7 +123,7 @@ namespace Listados
 			{
 				Id = "pepeizqapps",
 				Nombre = "pepeizq's apps",
-				Github = "pepeizqs-apps-web",
+				Github = "pepeizqs-apps-blazor-web",
                 Color1 = "#002b2b",
 				Tipo = ProyectoTipo.Web,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor }
