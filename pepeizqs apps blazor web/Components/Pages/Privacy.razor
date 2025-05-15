@@ -1,0 +1,32 @@
+﻿@page "/privacy/"
+
+@inject IHttpContextAccessor contexto
+
+@{
+    string? idioma = contexto?.HttpContext?.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+}
+
+<div style="background-color: var(--fondoEntrada); padding: 50px;">
+    <div style="font-size: 22px;">
+        @Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")
+    </div>
+
+    <hr />
+
+    <div class="caja-diseño" style="padding: 30px;">
+        <div>@Herramientas.Idiomas.BuscarTexto(idioma, "String1", "Privacy")</div>
+
+        <ul style="margin-top: 20px;">
+            <li>@Herramientas.Idiomas.BuscarTexto(idioma, "String2", "Privacy")</li>
+            <li style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String3", "Privacy")</li>
+            <li style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String4", "Privacy")</li>
+            <li style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String5", "Privacy")</li>
+        </ul>
+
+        <div>@Herramientas.Idiomas.BuscarTexto(idioma, "String6", "Privacy")</div>
+    </div>
+</div>
+
+@code {
+
+}

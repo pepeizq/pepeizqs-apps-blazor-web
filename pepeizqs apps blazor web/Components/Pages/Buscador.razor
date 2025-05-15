@@ -1,0 +1,86 @@
+﻿@rendermode InteractiveServer 
+
+@using Listados
+@using Microsoft.AspNetCore.Components.Web
+
+<div style="display: flex; flex-direction: row; align-items: center; margin-left: 20px;">
+    <svg style="width: 16px; height: 16px; fill: var(--colorTexto); margin-right: 15px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" /></svg>
+    <input type="text" @oninput="TextoCambiaBuscador" placeholder="@Herramientas.Idiomas.BuscarTexto(idioma, "Search", "Index")" style="padding: 5px 10px; background-color: var(--fondoEntrada); border: 0px; color: var(--colorTexto); display: block;" />
+    
+    @if (resultados != null)
+    {
+        if (resultados.Count > 0)
+        {
+            <div class="buscador-panel" style="height: calc(100% - var(--alturaCabecera)); width: 100%; top: 0; left: 0; overflow-x: auto; position: fixed; z-index: 1000; margin-top: var(--alturaCabecera); background-color: var(--fondoCuerpo); display: flex; align-items: start; flex-direction: column;">
+                <div style="background-color: var(--fondoEntrada); margin-left: auto; margin-right: auto; max-width: 1320px; width: 100%; padding: 15px;">
+                    @foreach (var resultado in resultados)
+                    {
+                        <div class="expandir" style="width: 100%; padding: 15px;">
+                            <a href="@resultado.Ubicacion" style="text-decoration: none; color: var(--colorTexto);">
+                                <div style="display: flex; align-items: center; background-color: var(--fondoBoton); border: 2px solid var(--fondoCuerpo); border-radius: 5px; overflow: hidden;">
+                                    <div>
+                                        <img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @resultado.Id + "/logo.webp", 100, 100)" style="width: 100px; height: 100px; object-fit: cover;" />
+                                    </div>
+
+                                    <div style="width: 100%; padding-left: 20px; padding-right: 20px;">
+                                        <div style="font-size: 19px;">@resultado.Nombre</div>
+                                        <div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String1", resultado.Id)</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+    </div>
+
+@code {
+
+    #nullable disable
+
+    [Parameter]
+    public string idioma { get; set; }
+
+    private List<Proyecto> resultados = new List<Proyecto>();
+
+    private void TextoCambiaBuscador(ChangeEventArgs texto)
+    {
+        resultados.Clear();
+
+        if (texto.Value.ToString().Trim().Length > 1)
+        {
+            string buscar = texto.Value.ToString().ToLower().Trim();
+
+            List<Proyecto> proyectos = Proyectos.Generar();
+
+            if (proyectos != null)
+            {
+                foreach (var proyecto in proyectos)
+                {
+                    if (proyecto.Nombre.ToLower().Contains(buscar) == true)
+                    {
+                        resultados.Add(proyecto);
+                    }
+                    else
+                    {
+                        if (proyecto.Buscador != null)
+                        {
+                            if (proyecto.Buscador.Count > 0)
+                            {
+                                foreach (var buscador in proyecto.Buscador)
+                                {
+                                    if (buscador.ToLower().Contains(buscar) == true)
+                                    {
+                                        resultados.Add(proyecto);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }     
+    }
+}

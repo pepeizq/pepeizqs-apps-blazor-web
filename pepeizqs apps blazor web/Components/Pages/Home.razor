@@ -1,0 +1,328 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+
+@using Herramientas
+@using Microsoft.AspNetCore.Components.Web
+@using Listados
+
+@inject IHttpContextAccessor contexto
+
+@{
+	string? idioma = contexto?.HttpContext?.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+
+	string descripcion = Herramientas.Idiomas.BuscarTexto(idioma, "Subtitle", "Index");
+	string titulo = "pepeizq's apps • " + descripcion;
+	string enlace = "https://pepeizqapps.com/";
+	string imagen = "https://pepeizqapps.com/logo/logo6.png";
+	string keywords = "source code";
+
+	if (string.IsNullOrEmpty(descripcion) == false)
+	{
+		string[] keywordsEnBruto = Herramientas.Buscador.LimpiarNombre(titulo, false).Split(' ');
+		List<string> keywordsLista = new List<string>();
+		keywordsLista.AddRange(keywordsEnBruto);
+
+		foreach (string keyword in keywordsLista)
+		{
+			if (keyword.Length > 3 && keywords.Contains(keyword) == false)
+			{
+				keywords = keywords + ", " + keyword;
+			}
+		}
+	}
+
+	<HeadContent>
+		<PageTitle>@titulo</PageTitle>
+
+		<meta name="og:title" Content="@titulo" />
+		<meta name="description" content="@descripcion" />
+		<meta name="og:description" content="@descripcion" />
+		<meta name="og:url" content="@enlace" />
+		<meta name="og:image" content="@imagen" />
+		<meta name="og:site_name" content="pepeizq's apps" />
+		<meta name="og:type" content="website" />
+		<meta name="robots" content="index, follow" />
+		<meta name="keywords" content="@keywords" />
+
+		<script type="application/ld+json">
+			{
+			  "@@context": "https://schema.org",
+			  "@@type": "BreadcrumbList",
+			  "itemListElement": [{
+				"@@type": "ListItem",
+				"position": 1,
+				"name": "Last Updates",
+				"item": "https://pepeizqapps.com/last-updates"
+			  }]
+			}
+		</script>
+
+		<script type="application/ld+json">
+			{
+			  "@@context": "https://schema.org",
+			  "@@type": "Organization",
+			  "name": "pepeizq's apps",
+			  "description": "@descripcion",
+			  "url": "@enlace",
+			  "logo": {
+				"@@type": "ImageObject",
+				"url": "@imagen",
+				"caption": "pepeizq's apps logo"
+			  },
+			  "contactPoint": {
+				"@@type": "ContactPoint",
+				"email": "admin@pepeizqapps.com",
+				"areaServed": "Worldwide",
+				"availableLanguage": "Spanish, English"
+			  },
+			  "sameAs": [
+				  "https://github.com/pepeizq/"
+			  ]
+			}
+		</script>
+
+		<link rel="canonical" href="@enlace" />
+	</HeadContent>
+}
+
+<style>
+	.boton-github {
+		transition: transform .5s;
+	}
+
+		.boton-github:hover {
+			transform: scale(1.01);
+		}
+</style>
+
+<style>
+	.boton-lateral {
+		width: 100%;
+		border: 0px;
+		padding: 10px 15px;
+		height: 44px;
+	}
+</style>
+
+<div style="background-color: var(--fondoEntrada); display: flex; flex-direction: column; gap: 50px; padding: 50px;">
+	<div class="caja-diseño" style="padding: 30px; color: var(--colorTexto);">
+		@Idiomas.BuscarTexto(idioma, "Presentation", "Index")
+	</div>
+
+	<div style="display: flex; align-items: start;">
+		<div style="width: 20%; padding-right: 40px;">
+			<div style="border-right: 3px solid var(--fondoOscuro);">
+				<div>
+					@{
+						string fondo = "background-color: transparent;";
+
+						if (tipoSeleccionado == "Todos")
+						{
+							fondo = "background-color: var(--fondoOscuro);";
+						}
+
+						<button @onclick="@(e => CambiarProyectos(e))" class="boton-lateral" style="@fondo">
+							<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+								<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "All", "Index")</span>
+								<span style="color: var(--colorTexto); margin-left: 10px;">(@Listados.Proyectos.Generar().Count)</span>
+							</div>
+						</button>
+					}
+				</div>
+
+				<div style="margin-top: 15px;">
+					<div>
+						@{
+							string fondoApp = "background-color: transparent;";
+
+							if (tipoSeleccionado == ProyectoTipo.App.ToString())
+							{
+								fondoApp = "background-color: var(--fondoOscuro);";
+							}
+
+							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.App))" class="boton-lateral" style="@fondoApp">
+								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "App", "Index")</span>
+									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.App))</span>
+								</div>
+							</button>
+						}
+					</div>
+
+					<div>
+						@{
+							string fondoWeb = "background-color: transparent;";
+
+							if (tipoSeleccionado == ProyectoTipo.Web.ToString())
+							{
+								fondoWeb = "background-color: var(--fondoOscuro);";
+							}
+
+							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Web))" class="boton-lateral" style="@fondoWeb">
+								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Web", "Index")</span>
+									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Web))</span>
+								</div>
+							</button>
+						}
+					</div>
+
+					<div>
+						@{
+							string fondoJuego = "background-color: transparent;";
+
+							if (tipoSeleccionado == ProyectoTipo.Juego.ToString())
+							{
+								fondoJuego = "background-color: var(--fondoOscuro);";
+							}
+
+							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Juego))" class="boton-lateral" style="@fondoJuego">
+								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Game", "Index")</span>
+									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Juego))</span>
+								</div>
+							</button>
+						}
+					</div>
+
+					<div>
+						@{
+							string fondoComplemento = "background-color: transparent;";
+
+							if (tipoSeleccionado == ProyectoTipo.Complemento.ToString())
+							{
+								fondoComplemento = "background-color: var(--fondoOscuro);";
+							}
+
+							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Complemento))" class="boton-lateral" style="@fondoComplemento">
+								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Extension", "Index")</span>
+									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Complemento))</span>
+								</div>
+							</button>
+						}
+					</div>
+				</div>
+
+				<div style="margin-top: 15px;">
+					@foreach (var tecnologia in tecnologias)
+					{
+						<div>
+							@{
+								string fondoTecnologia = "background-color: transparent;";
+
+								if (tipoSeleccionado == tecnologia.Id.ToString())
+								{
+									fondoTecnologia = "background-color: var(--fondoOscuro);";
+								}
+
+								<button @onclick="@(e => CambiarProyectos(e, tecnologia.Id))" class="boton-lateral" style="@fondoTecnologia">
+									@if (tecnologia.MostrarNombre == false)
+									{
+										<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+											<img src="/imagenes/tecnologias/@tecnologia.Imagen" style="max-height: 20px; object-fit: contain;" alt="@tecnologia.Nombre" />
+											<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(tecnologia.Id))</span>
+										</div>
+									}
+									else
+									{
+										<div style="display: flex; align-items: center; width: 100%; height: 100%;">
+											<img src="/imagenes/tecnologias/@tecnologia.Imagen" style="max-height: 20px; object-fit: contain;" alt="@tecnologia.Nombre" />
+											<span style="color: var(--colorTexto); margin-left: 10px;">@tecnologia.Nombre</span>
+											<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(tecnologia.Id))</span>
+										</div>
+									}
+								</button>
+							}
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+
+		<div style="width: 80%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;">
+			@foreach (var proyecto in proyectos)
+			{
+				string enlaceProyecto = string.Empty;
+
+				if (string.IsNullOrEmpty(proyecto.Ubicacion) == true && string.IsNullOrEmpty(proyecto.Github) == false)
+				{
+					enlaceProyecto = "https://github.com/pepeizq/" + proyecto.Github + "/";
+				}
+				else
+				{
+					enlaceProyecto = proyecto.Ubicacion;
+				}
+			
+				<NavLink href="@enlaceProyecto" style="padding: 0px; border: 0px; color: var(--colorTexto); text-decoration: none;">
+					<div class="expandir" style="display: flex; flex-direction: column; width: 100%; height: 100%; border: 1px solid var(--fondoOscuro); overflow: hidden; position: relative; background-color: @proyecto.Color1;">
+						<div style="display: flex; justify-content: center; align-items: center; overflow: hidden;">
+							<img style="height: 100px; flex-shrink: 0; min-width: 100%; object-fit: cover; opacity: 0.5;" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura1.webp", 297, 100)" />
+						</div>
+
+						<div style="display: flex; flex-direction: column; border: 2px solid @proyecto.Color1; background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); flex: 1;">
+							<div style="display: flex; align-items: center; gap: 15px; padding: 15px; background-color: @proyecto.Color1;">
+								<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 40, 40)" style="width: 40px; height: 40px; object-fit: cover;" />
+								<div style="font-size: 18px; width: 100%; text-align: center;">@proyecto.Nombre</div>
+							</div>
+
+							<div style="padding: 15px; text-align: center;">@Herramientas.Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
+						</div>
+					</div>
+				</NavLink>
+			}
+		</div>
+	</div>
+</div>
+
+@code {
+
+	#nullable disable
+
+	private List<Tecnologia> tecnologias = new List<Tecnologia>();
+	private List<Proyecto> proyectos = new List<Proyecto>();
+
+	private string tipoSeleccionado = string.Empty;
+
+	protected override void OnInitialized()
+	{
+		tipoSeleccionado = "Todos";
+		tecnologias = Listados.Tecnologias.Generar();
+
+		if (tecnologias.Count > 0)
+		{
+			tecnologias = tecnologias.OrderBy(x => x.Nombre).ToList();
+		}
+
+		proyectos = Listados.Proyectos.Generar(true);
+	}
+
+	private void CambiarProyectos(MouseEventArgs e)
+	{
+		tipoSeleccionado = "Todos";
+		proyectos = Listados.Proyectos.Generar();
+	}
+
+	private void CambiarProyectos(MouseEventArgs e, ProyectoTipo tipo)
+	{
+		tipoSeleccionado = tipo.ToString();
+		proyectos = Listados.Proyectos.DevolverProyectos(tipo);
+	}
+
+	private void CambiarProyectos(MouseEventArgs e, TecnologiaTipo tipo)
+	{
+		tipoSeleccionado = tipo.ToString();
+		proyectos = Listados.Proyectos.DevolverProyectos(tipo);
+	}
+
+	private int LeerProyectos(ProyectoTipo tipo)
+	{
+		return Listados.Proyectos.DevolverProyectos(tipo).Count;
+	}
+
+	private int LeerProyectos(TecnologiaTipo tipo)
+	{
+		return Listados.Proyectos.DevolverProyectos(tipo).Count;
+	}
+}

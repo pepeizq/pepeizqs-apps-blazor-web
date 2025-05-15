@@ -1,0 +1,127 @@
+﻿.cabecera-poner {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    line-height: 30px;
+    gap: 20px;
+}
+
+.texto-logo {
+    font-size: 22px;
+    color: var(--colorTexto);
+    text-decoration: none;
+}
+
+    .texto-logo:hover {
+        color: var(--colorTextoHover);
+    }
+
+.menu-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-dropdown-contenido {
+    display: none;
+    position: absolute;
+    background-color: var(--fondoOscuro);
+    color: var(--colorTexto);
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    padding: 0px;
+    z-index: 1;
+}
+
+.menu-dropdown-item {
+    display: block;
+    padding: 8px 15px;
+    margin: 0px;
+}
+
+.menu-dropdown:hover .menu-dropdown-contenido {
+    display: block;
+}
+
+.menu-dropdown-contenido a:hover {
+    color: var(--colorTextoHover);
+    background-color: var(--fondoBotonHover);
+}
+
+.menu-dropdown-contenido button:hover {
+    color: var(--colorTextoHover);
+    background-color: var(--fondoBotonHover);
+}
+
+.cuerpo {
+    background-color: var(--fondoCuerpo);
+    color: var(--colorTexto);
+    height: 100%;
+    font-family: 'Motiva Sans';
+}
+
+.cuerpo-ancho {
+    max-width: 1320px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pie {
+    background-color: var(--fondoOscuro);
+    font-size: var(--tamañoTexto);
+    color: var(--colorTexto);
+}
+
+.texto-pie {
+    font-size: var(--tamañoTexto);
+    color: var(--colorTexto);
+    text-decoration: none;
+}
+
+    .texto-pie:hover {
+        color: var(--colorTextoHover);
+    }
+
+    .texto-pie:visited {
+        color: var(--colorTextoVisitado);
+    }
+
+.expandir {
+    transition: transform .2s;
+}
+
+    .expandir:hover {
+        transform: scale(1.02);
+    }
+
+.texto-cabecera {
+    font-size: var(--tamañoTexto);
+    color: var(--colorTexto);
+    margin-left: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    vertical-align: middle;
+    background-color: transparent;
+}
+
+    .texto-cabecera:hover {
+        color: var(--colorTextoHover);
+    }
+
+    .texto-cabecera:visited {
+        color: var(--colorTextoVisitado);
+    }
+
+    .texto-cabecera:active {
+        color: var(--colorTextoActivo);
+    }
+
+.caja-diseño {
+    background: linear-gradient(180deg, var(--fondoOscuro) 0%, var(--fondoEntrada) 211.07%);
+    border: 2px solid var(--fondoOscuro);
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.28),0px 0px 2px 0px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+    overflow: hidden;
+}

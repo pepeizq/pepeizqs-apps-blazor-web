@@ -1,0 +1,113 @@
+﻿@page "/last-updates/"
+
+@using Listados
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.Data.SqlClient
+
+@inject IHttpContextAccessor contexto
+
+@{
+	string? idioma = contexto?.HttpContext?.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+
+	string descripcion = Herramientas.Idiomas.BuscarTexto(idioma, "String2", "LastUpdates");
+	string titulo = Herramientas.Idiomas.BuscarTexto(idioma, "Title", "LastUpdates") + " • " + descripcion;
+	string enlace = "https://pepeizqapps.com/last-updates";
+	string imagen = "https://pepeizqapps.com/imagenes/logo/logo6.png";
+
+	<HeadContent>
+		<PageTitle>@titulo</PageTitle>
+
+		<meta name="og:title" Content="@titulo" />
+		<meta name="description" content="@descripcion" />
+		<meta name="og:description" content="@descripcion" />
+		<meta name="og:url" content="@enlace" />
+		<meta name="og:image" content="@imagen" />
+		<meta name="og:site_name" content="pepeizq's apps" />
+		<meta name="og:type" content="website" />
+		<meta name="robots" content="index, follow" />
+		<meta name="keywords" content="pepeizq, deals, source code, developer" />
+
+		<link rel="canonical" href="@enlace" />
+	</HeadContent>
+}
+
+<div style="background-color: var(--fondoEntrada); padding: 50px;">
+	<div style="font-size: 22px;">
+		@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "LastUpdates")
+	</div>
+	<hr/>
+
+	<div class="caja-diseño" style="padding: 20px 30px; margin-bottom: 40px;">
+		@Herramientas.Idiomas.BuscarTexto(idioma, "String1", "LastUpdates")
+	</div>
+
+	@foreach (var proyecto in proyectos)
+	{
+		<div class="expandir" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
+			<a href="https://github.com/pepeizq/@proyecto.Proyecto.Github" style="text-decoration: none; color: var(--colorTexto);" target="_blank">
+				<div style="display: flex; align-items: center; border: 2px solid var(--fondoCuerpo); background-color: var(--fondoBoton); padding: 15px 20px; border-radius: 5px;">
+					<div style="width: 100%;">
+						<div style="font-size: 20px;">
+							@proyecto.Proyecto.Nombre
+						</div>
+
+						<div style="margin-top: 5px;">
+							@Herramientas.Idiomas.BuscarTexto(idioma, "String1", proyecto.Proyecto.Id)
+						</div>
+					</div>
+
+					<div style="min-width: 250px; text-align: right;">
+						@if (string.IsNullOrEmpty(proyecto.FechaGithub) == false)
+						{
+							if (proyecto.FechaGithub != "0")
+							{
+								@Herramientas.Calculadora.DiferenciaTiempo(DateTime.Parse(proyecto.FechaGithub), idioma)
+							}
+						}						
+					</div>
+				</div>
+			</a>
+		</div>	
+	}
+</div>
+
+@code {
+
+    #nullable disable
+
+    [Parameter]
+    public string idioma { get; set; }
+
+    SqlConnection conexion = new SqlConnection();
+
+    private List<ProyectoGithub> proyectos = new List<ProyectoGithub>();
+
+    protected override void OnInitialized()
+    {
+        if (conexion.State != System.Data.ConnectionState.Open)
+        {
+            conexion = Herramientas.BaseDatos.Conectar();
+        }
+
+        using (conexion)
+        {
+            List<Proyecto> proyectosTemporal = Listados.Proyectos.Generar();
+
+            foreach (var proyectoTemporal in proyectosTemporal)
+            {
+                BaseDatos.GithubBaseDatos api = BaseDatos.Github.Buscar(conexion, proyectoTemporal.Github);
+
+				ProyectoGithub nuevoProyecto = new ProyectoGithub();
+				nuevoProyecto.Proyecto = proyectoTemporal;
+				nuevoProyecto.FechaGithub = api.Fecha;
+
+				proyectos.Add(nuevoProyecto);
+			}
+
+			if (proyectos.Count > 0)
+			{
+				proyectos = proyectos.OrderBy(x => x.FechaGithub).Reverse().ToList();
+			}
+		}	
+	}
+}
