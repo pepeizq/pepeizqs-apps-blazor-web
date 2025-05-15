@@ -7,4 +7,4 @@ This is the source code of the website [pepeizqapps.com](https://pepeizqapps.com
 > [!NOTE]
 > For security reasons I do not include the database in the source code, nor the files appsettings.json and appsettings.Development.json (these files connect to the database).
 
-[![https://pepeizqapps.com/](https://i.imgur.com/b0dXd7w.png)](https://pepeizqapps.com/)
+[![https://pepeizqapps.com/](https://i.imgur.com/BVKYarN.png)](https://pepeizqapps.com/)
