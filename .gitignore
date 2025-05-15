@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /pepeizqs apps blazor web/appsettings.json
+/pepeizqs apps blazor web/appsettings.Development.json
