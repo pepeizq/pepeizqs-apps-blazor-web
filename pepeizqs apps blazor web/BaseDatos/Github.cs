@@ -93,6 +93,7 @@ namespace BaseDatos
 
 	public class GithubBaseDatos
 	{
+        public string Id { get; set; }
 		public string Fecha { get; set; }
 		public int Estrellas { get; set; }
 		public int Forks { get; set; }

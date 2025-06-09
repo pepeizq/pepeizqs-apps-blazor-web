@@ -1,6 +1,6 @@
 using Herramientas;
 using Microsoft.AspNetCore.ResponseCompression;
-using pepeizqs_apps_blazor_web.Components;
+using pepeizqs_apps_blazor_web.Componentes;
 using System.Globalization;
 using System.IO.Compression;
 using System.Threading.RateLimiting;
@@ -152,8 +152,9 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    app.UseHsts();
+	//app.UseExceptionHandler("/Error", createScopeForErrors: true);
+	app.UseDeveloperExceptionPage();
+	app.UseHsts();
 }
 
 #region Compresion (Primero)

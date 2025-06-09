@@ -1,17 +1,7 @@
 ﻿@using Microsoft.Data.SqlClient
-@using pepeizqs_apps_blazor_web.Components.Pages
+@using pepeizqs_apps_blazor_web.Componentes.Paginas
 
 @inject IHttpContextAccessor contexto
-
-<style>
-    .pie-github {
-        transition: transform .2s;
-    }
-
-        .pie-github:hover {
-            filter: brightness(110%);
-        }
-</style>
 
 @{
     #nullable disable
@@ -49,7 +39,7 @@
     <header style="height: var(--alturaCabecera); background-color: var(--fondoOscuro); z-index: 9999; position: sticky; top: 0; padding: 15px;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm" style="padding: 0px;">
             <div class="cabecera-poner cuerpo-ancho" style="justify-content: start; display: flex; align-items: center;">
-                <a class="texto-logo" href="/">pepeizq's apps</a>
+                <a class="texto-logo" href="/" data-enhance-nav="false">pepeizq's apps</a>
 
                 <Buscador idioma="@idioma"/>
 
@@ -74,11 +64,11 @@
         <div class="cuerpo-ancho" style="padding-top: 30px; padding-bottom: 30px; display: flex; align-items: center; font-size: 17px;">
             <div style="width: 50%; text-align: left;">
                 <div>
-                    &copy; @DateTime.Now.Year.ToString() • <a href="https://pepeizqapps.com/" style="text-decoration: none;" target="_blank">pepeizq's apps</a> • <a href="https://pepeizqdeals.com/" style="text-decoration: none;" target="_blank">pepeizq's deals</a>
+                    &copy; @DateTime.Now.Year.ToString() • <a href="https://pepeizqapps.com/" style="text-decoration: none;" target="_blank" data-enhance-nav="false">pepeizq's apps</a> • <a href="https://pepeizqdeals.com/" style="text-decoration: none;" target="_blank">pepeizq's deals</a>
                 </div>
 
                 <div style="font-size: 16px; margin-top: 30px;">
-                    <a href="/last-updates" target="_blank" style="text-decoration: none;">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "LastUpdates")</a> • admin@pepeizqapps.com • <a href="/privacy" style="text-decoration: none;">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")</a>
+                    <a href="/last-updates" target="_blank" style="text-decoration: none;" data-enhance-nav="false">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "LastUpdates")</a> • admin@pepeizqapps.com • <a href="/privacy" style="text-decoration: none;" data-enhance-nav="false">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")</a>
                 </div>
             </div>
 
@@ -164,6 +154,15 @@
 
             window.scrollTo({ top: y, behavior: 'smooth' });
         }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LDEVZV588Q"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LDEVZV588Q');
     </script>
 
     <div id="components-reconnect-modal" style="display: none" />

@@ -85,13 +85,13 @@
 	<div class="caja-diseño" style="background-color: @proyecto.Color1; display: flex; align-items: center; background-size: cover; background-image: linear-gradient(to right, @proyecto.Color1 50%, transparent), url('/imagenes/@proyecto.Id/captura2.webp');">
 		@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
 		{
-			<a href="@proyecto.Enlace" target="_blank">
-				<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" />
+			<a href="@proyecto.Enlace" target="_blank" title="Store">
+				<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
 			</a>
 		}
 		else
 		{
-			<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" />
+			<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
 		}
 
 		<div style="padding: 20px 30px;">
@@ -101,7 +101,7 @@
 			@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
 			{
 				<div style="margin-top: 10px;">
-					<a href="@proyecto.Enlace" target="_blank" style="text-decoration: none;">@proyecto.Enlace</a>
+					<a href="@proyecto.Enlace" target="_blank" style="text-decoration: none;" title="Store">@proyecto.Enlace</a>
 				</div>
 			}
 		</div>

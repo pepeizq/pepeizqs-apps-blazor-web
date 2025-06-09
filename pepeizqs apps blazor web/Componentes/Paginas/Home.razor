@@ -6,11 +6,11 @@
 @using Microsoft.AspNetCore.Components.Web
 @using Listados
 
-@inject IHttpContextAccessor contexto
+@inject IHttpContextAccessor Contexto
+@inject PersistentComponentState ApplicationState
+@implements IDisposable
 
 @{
-	string? idioma = contexto?.HttpContext?.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
-
 	string descripcion = Herramientas.Idiomas.BuscarTexto(idioma, "Subtitle", "Index");
 	string titulo = "pepeizq's apps • " + descripcion;
 	string enlace = "https://pepeizqapps.com/";
@@ -254,16 +254,16 @@
 				{
 					enlaceProyecto = proyecto.Ubicacion;
 				}
-			
-				<NavLink href="@enlaceProyecto" style="padding: 0px; border: 0px; color: var(--colorTexto); text-decoration: none;">
+
+				<NavLink href="@enlaceProyecto" data-enhance-nav="false" style="padding: 0px; border: 0px; color: var(--colorTexto); text-decoration: none;">
 					<div class="expandir" style="display: flex; flex-direction: column; width: 100%; height: 100%; border: 1px solid var(--fondoOscuro); overflow: hidden; position: relative; background-color: @proyecto.Color1;">
 						<div style="display: flex; justify-content: center; align-items: center; overflow: hidden;">
-							<img style="height: 100px; flex-shrink: 0; min-width: 100%; object-fit: cover; opacity: 0.5;" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura1.webp", 297, 100)" />
+							<img style="height: 100px; flex-shrink: 0; min-width: 100%; object-fit: cover; opacity: 0.5;" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura1.webp", 297, 100)" alt="screenshot"/>
 						</div>
 
 						<div style="display: flex; flex-direction: column; border: 2px solid @proyecto.Color1; background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); flex: 1;">
 							<div style="display: flex; align-items: center; gap: 15px; padding: 15px; background-color: @proyecto.Color1;">
-								<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 40, 40)" style="width: 40px; height: 40px; object-fit: cover;" />
+								<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 40, 40)" style="width: 40px; height: 40px; object-fit: cover;" alt="logo"/>
 								<div style="font-size: 18px; width: 100%; text-align: center;">@proyecto.Nombre</div>
 							</div>
 
@@ -280,6 +280,10 @@
 
 	#nullable disable
 
+	private PersistingComponentStateSubscription? persistingSubscription;
+
+	private string idioma = "en";
+
 	private List<Tecnologia> tecnologias = new List<Tecnologia>();
 	private List<Proyecto> proyectos = new List<Proyecto>();
 
@@ -287,6 +291,8 @@
 
 	protected override void OnInitialized()
 	{
+		idioma = Contexto.HttpContext.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+
 		tipoSeleccionado = "Todos";
 		tecnologias = Listados.Tecnologias.Generar();
 
@@ -295,8 +301,17 @@
 			tecnologias = tecnologias.OrderBy(x => x.Nombre).ToList();
 		}
 
-		proyectos = Listados.Proyectos.Generar(true);
+		if (!ApplicationState.TryTakeFromJson<List<Proyecto>>("proyectos", out var proyectosGuardados))
+		{
+			proyectos = Listados.Proyectos.Generar(true);
+		}
+		else
+		{
+			proyectos = proyectosGuardados;
+		}
 	}
+
+	public void Dispose() => persistingSubscription?.Dispose();
 
 	private void CambiarProyectos(MouseEventArgs e)
 	{

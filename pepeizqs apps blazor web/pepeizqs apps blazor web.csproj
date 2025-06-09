@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Components\Pages\Webs\g40mp4gy.n1w~" />
+    <None Remove="Componentes\Paginas\Webs\g40mp4gy.n1w~" />
   </ItemGroup>
 
   <ItemGroup>

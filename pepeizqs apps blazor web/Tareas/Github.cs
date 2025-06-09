@@ -28,7 +28,7 @@ namespace Tareas
 				{
 					SqlConnection conexion = Herramientas.BaseDatos.Conectar();
 
-                    TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(30);
+                    TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(120);
 
                     if (BaseDatos.Tareas.ComprobarTareaUso(conexion, "github", tiempoSiguiente) == true)
                     {
@@ -36,17 +36,19 @@ namespace Tareas
 
                         try
                         {
-							foreach (var proyecto in Listados.Proyectos.Generar())
+							List<BaseDatos.GithubBaseDatos> bdGithub = new List<BaseDatos.GithubBaseDatos>();
+
+							foreach (var proyecto in BaseDatos.Github.Todo(conexion))
 							{ 
-								GithubAPI api = await Github.CargarAPI(proyecto.Github);
+								GithubAPI api = await Github.CargarAPI(proyecto.Id);
 
                                 if (string.IsNullOrEmpty(api.UltimaModificacion) == false && int.Parse(api.Estrellas) > -1 && int.Parse(api.Forks) > -1)
                                 {
-                                    BaseDatos.Github.Actualizar(conexion, proyecto.Github, api.UltimaModificacion, api.Estrellas, api.Forks, api.Suscriptores);
+                                    BaseDatos.Github.Actualizar(conexion, proyecto.Id, api.UltimaModificacion, api.Estrellas, api.Forks, api.Suscriptores);
                                 }
                                 else
                                 {
-                                    BaseDatos.Github.Actualizar(conexion, proyecto.Github, "0", "0", "0", "0");
+                                    BaseDatos.Github.Actualizar(conexion, proyecto.Id, "0", "0", "0", "0");
                                 }
                             }                          
                         }

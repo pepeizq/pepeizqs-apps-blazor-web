@@ -68,7 +68,7 @@ namespace Listados
             {
                 Id = "pepeizqdeals",
                 Nombre = "pepeizq's deals",
-                Github = "pepeizqs-deals-web",
+                Github = "pepeizqs-deals-blazor-web",
                 Ubicacion = "/web/pepeizqs-deals",
                 Color1 = "#002033",
                 Color2 = "#1b2838",
