@@ -193,4 +193,6 @@ app.UseRateLimiter();
 
 #endregion
 
+app.UseStatusCodePagesWithRedirects("/error");
+
 app.Run();

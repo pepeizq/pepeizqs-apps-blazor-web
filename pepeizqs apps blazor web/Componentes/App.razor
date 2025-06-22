@@ -145,7 +145,9 @@
 
     <script async src="~/superjs.js"></script>
     
-    <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <div id="reconnect-modal" style="display: none;"></div>
+    <script src="@Assets["_framework/blazor.web.js"]" autostart="false"></script>
+    <script src="@Assets["Inicio.js"]"></script>
 
     <script>
         function moverScroll(id) {
@@ -165,7 +167,7 @@
         gtag('config', 'G-LDEVZV588Q');
     </script>
 
-    <div id="components-reconnect-modal" style="display: none" />
+@*     <div id="components-reconnect-modal" style="display: none" /> *@
 </body>
 
 </html>
