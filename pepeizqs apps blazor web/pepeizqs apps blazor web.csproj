@@ -9,6 +9,7 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <ServerGarbageCollection>false</ServerGarbageCollection>
+    <PublishIISAssets>true</PublishIISAssets>
   </PropertyGroup>
 
   <ItemGroup>

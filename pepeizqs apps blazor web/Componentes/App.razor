@@ -1,15 +1,6 @@
 ﻿@using Microsoft.Data.SqlClient
 @using pepeizqs_apps_blazor_web.Componentes.Paginas
 
-@inject IHttpContextAccessor contexto
-
-@{
-    #nullable disable
-
-    string github = "https://github.com/pepeizq/";
-    string idioma = contexto.HttpContext.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,10 +135,13 @@
     </footer>
 
     <script async src="~/superjs.js"></script>
-    
-    <div id="reconnect-modal" style="display: none;"></div>
-    <script src="@Assets["_framework/blazor.web.js"]" autostart="false"></script>
-    <script src="@Assets["Inicio.js"]"></script>
+
+    @if (Herramientas.Bots.UserAgentEsBot(userAgent) == false)
+    {
+        <div id="reconnect-modal" style="display: none;"></div>
+        <script src="@Assets["_framework/blazor.web.js"]" autostart="false"></script>
+        <script src="@Assets["Inicio.js"]"></script>
+    }
 
     <script>
         function moverScroll(id) {
@@ -158,16 +152,28 @@
         }
     </script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LDEVZV588Q"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-LDEVZV588Q');
-    </script>
-
-@*     <div id="components-reconnect-modal" style="display: none" /> *@
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "caf537d7248146608f4fc83d300659eb"}'></script>
 </body>
 
 </html>
+
+@code {
+
+    #nullable disable
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private string idioma = "en";
+    private string userAgent = null;
+    private string github = "https://github.com/pepeizq/";
+
+    protected override void OnInitialized()
+    {
+        if (HttpContext != null)
+        {
+            idioma = HttpContext.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+            userAgent = HttpContext.Request.Headers.UserAgent.ToString();
+        }
+    }
+}
