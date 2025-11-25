@@ -7,8 +7,6 @@
 @using Listados
 
 @inject IHttpContextAccessor Contexto
-@inject PersistentComponentState ApplicationState
-@implements IDisposable
 
 @{
 	string descripcion = Herramientas.Idiomas.BuscarTexto(idioma, "Subtitle", "Index");
@@ -280,38 +278,27 @@
 
 	#nullable disable
 
-	private PersistingComponentStateSubscription? persistingSubscription;
-
 	private string idioma = "en";
 
 	private List<Tecnologia> tecnologias = new List<Tecnologia>();
-	private List<Proyecto> proyectos = new List<Proyecto>();
+	[PersistentState] public List<Proyecto> proyectos { get; set; }
 
 	private string tipoSeleccionado = string.Empty;
 
 	protected override void OnInitialized()
 	{
-		idioma = Contexto.HttpContext.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+		idioma = Contexto?.HttpContext?.Request?.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
 
 		tipoSeleccionado = "Todos";
 		tecnologias = Listados.Tecnologias.Generar();
 
-		if (tecnologias.Count > 0)
+		if (tecnologias?.Count > 0)
 		{
 			tecnologias = tecnologias.OrderBy(x => x.Nombre).ToList();
 		}
 
-		if (!ApplicationState.TryTakeFromJson<List<Proyecto>>("proyectos", out var proyectosGuardados))
-		{
-			proyectos = Listados.Proyectos.Generar(true);
-		}
-		else
-		{
-			proyectos = proyectosGuardados;
-		}
+		proyectos ??= Listados.Proyectos.Generar(true);
 	}
-
-	public void Dispose() => persistingSubscription?.Dispose();
 
 	private void CambiarProyectos(MouseEventArgs e)
 	{
