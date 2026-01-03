@@ -64,8 +64,6 @@
 			  }
 			}
 		</script>
-
-		<link rel="canonical" href="@enlace" />
 	</HeadContent>
 }
 
@@ -83,7 +81,7 @@
 </style>
 
 <div style="display: flex; flex-direction: column; background-color: var(--fondoEntrada); padding: 30px; gap: 30px;">
-	<div class="caja-diseño" style="background: linear-gradient(180deg, @proyecto.Color1 0%, var(--fondoEntrada) 211.07%); display: flex; align-items: center;">
+	<div class="caja-diseño" style="background: linear-gradient(90deg, @proyecto.Color1 0%, var(--fondoEntrada) 180%); display: flex; align-items: center;">
 		@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
 		{
 			<a href="@proyecto.Enlace" target="_blank">

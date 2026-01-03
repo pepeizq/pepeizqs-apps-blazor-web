@@ -22,8 +22,10 @@
     <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png" />
     <meta name="theme-color" content="#007272" />
 
+    <link rel="canonical" href="@enlace" />
+
+    <HeadOutlet />
     <ImportMap />
-    <HeadOutlet />   
 </head>
 
 <body class="cuerpo" style="margin: 0px;">
@@ -162,6 +164,7 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
+    private string enlace = null;
     private string idioma = "en";
     private string userAgent = null;
     private string github = "https://github.com/pepeizq/";
@@ -170,8 +173,11 @@
     {
         if (HttpContext != null)
         {
-            idioma = HttpContext.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
-            userAgent = HttpContext.Request.Headers.UserAgent.ToString();
+            idioma = HttpContext?.Request?.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+            userAgent = HttpContext?.Request?.Headers.UserAgent.ToString();
+
+            var path = HttpContext?.Request?.Path.ToString();
+            enlace = "https://pepeizqapps.com" + path;
         }
     }
 }
