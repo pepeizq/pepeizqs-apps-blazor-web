@@ -67,12 +67,12 @@ namespace Listados
             Proyecto proyecto1 = new Proyecto
             {
                 Id = "pepeizqdeals",
-                Nombre = "pepeizq's deals",
-                Github = "pepeizqs-deals-blazor-web",
-                Ubicacion = "/web/pepeizqs-deals",
+                Nombre = "pepe's deals",
+                Github = "pepe-deals-blazor-web",
+                Ubicacion = "/web/pepe-deals",
                 Color1 = "#002033",
                 Color2 = "#1b2838",
-                Enlace = "https://pepeizqdeals.com/",
+                Enlace = "https://pepe.deals/",
                 Tipo = ProyectoTipo.Web,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor }
 			};

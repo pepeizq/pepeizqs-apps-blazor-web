@@ -7,6 +7,9 @@ using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var conexionTexto = builder.Configuration.GetConnectionString("pepeizqs_apps_webContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+Herramientas.BaseDatos.cadenaConexion = conexionTexto;
+
 #region Compresion (Primero)
 
 builder.Services.AddResponseCompression(options =>
@@ -80,8 +83,10 @@ builder.Services.Configure<HostOptions>(hostOptions =>
 });
 
 builder.Services.AddSingleton<Tareas.TareaGithub>();
+builder.Services.AddSingleton<Tareas.TareaIndexNow>();
 
 builder.Services.AddHostedService(provider => provider.GetRequiredService<Tareas.TareaGithub>());
+builder.Services.AddHostedService(provider => provider.GetRequiredService<Tareas.TareaIndexNow>());
 
 #endregion
 
@@ -101,52 +106,6 @@ builder.Services.AddHsts(opciones =>
 });
 
 #endregion
-
-#region Antibots
-
-builder.Services.AddRateLimiter(opciones =>
-{
-	opciones.OnRejected = (contexto, _) =>
-	{
-		if (contexto.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
-		{
-			contexto.HttpContext.Response.Headers.RetryAfter =
-				((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
-		}
-
-		contexto.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-		contexto.HttpContext.Response.WriteAsync("Too many requests. Please try again later. If you are a bot, go fuck yourself somewhere else.");
-
-		return new ValueTask();
-	};
-
-	opciones.GlobalLimiter = PartitionedRateLimiter.CreateChained(
-		PartitionedRateLimiter.Create<HttpContext, string>(contexto =>
-		{
-			string? usuario = contexto.User.Identity?.Name;
-
-			if (string.IsNullOrEmpty(usuario) == true)
-			{
-				return RateLimitPartition.GetFixedWindowLimiter(
-					partitionKey: contexto.Request.Headers.Host.ToString(),
-					factory: partition => new FixedWindowRateLimiterOptions
-					{
-						AutoReplenishment = true,
-						PermitLimit = 500,
-						QueueLimit = 0,
-						Window = TimeSpan.FromMinutes(1)
-					});
-			}
-			else
-			{
-				return RateLimitPartition.GetNoLimiter("");
-			}
-		})
-	);
-});
-
-#endregion
-
 
 var app = builder.Build();
 
@@ -184,12 +143,6 @@ app.UseAuthorization();
 #region Redireccionador
 
 app.MapControllers();
-
-#endregion
-
-#region Antibots
-
-app.UseRateLimiter();
 
 #endregion
 

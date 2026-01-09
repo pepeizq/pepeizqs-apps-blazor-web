@@ -26,9 +26,9 @@ namespace Tareas
 			{
 				using (AsyncServiceScope scope = _factoria.CreateAsyncScope())
 				{
-					SqlConnection conexion = Herramientas.BaseDatos.Conectar();
+					using SqlConnection conexion = Herramientas.BaseDatos.Conectar();
 
-                    TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(120);
+					TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(120);
 
                     if (BaseDatos.Tareas.ComprobarTareaUso(conexion, "github", tiempoSiguiente) == true)
                     {
