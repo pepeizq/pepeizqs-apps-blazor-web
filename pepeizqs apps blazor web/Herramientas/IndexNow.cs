@@ -30,11 +30,5 @@ namespace Herramientas.Redireccionador
 
 			return Ok(claveIndexNow);
 		}
-
-		[HttpGet("ads.txt")]
-		public IActionResult GoogleAdsense()
-		{
-			return Ok("google.com, pub-8367196321891178, DIRECT, f08c47fec0942fa0");
-		}
 	}
 }

@@ -42,20 +42,16 @@ namespace Tareas
 							{ 
 								GithubAPI api = await Github.CargarAPI(proyecto.Id);
 
-                                if (string.IsNullOrEmpty(api.UltimaModificacion) == false && int.Parse(api.Estrellas) > -1 && int.Parse(api.Forks) > -1)
+                                if (string.IsNullOrEmpty(api.UltimaModificacion) == false && api.Estrellas > -1 && api.Forks > -1)
                                 {
                                     BaseDatos.Github.Actualizar(conexion, proyecto.Id, api.UltimaModificacion, api.Estrellas, api.Forks, api.Suscriptores);
                                 }
-                                else
-                                {
-                                    BaseDatos.Github.Actualizar(conexion, proyecto.Id, "0", "0", "0", "0");
-                                }
                             }                          
                         }
-                        catch 
+                        catch (Exception ex)
                         {
-                           
-                        }
+							_logger.LogError(ex, "Error en TareaGithub");
+						}
                     }
                 }
 			}

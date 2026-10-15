@@ -34,12 +34,12 @@ namespace Herramientas
 		public string UltimaModificacion { get; set; }
 
 		[JsonPropertyName("stargazers_count")]
-		public string Estrellas { get; set; }
+		public int Estrellas { get; set; }
 
 		[JsonPropertyName("forks_count")]
-		public string Forks { get; set; }
+		public int Forks { get; set; }
 
         [JsonPropertyName("subscribers_count")]
-        public string Suscriptores { get; set; }
+        public int Suscriptores { get; set; }
     }
 }

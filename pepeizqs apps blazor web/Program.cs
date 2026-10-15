@@ -1,9 +1,7 @@
 using Herramientas;
 using Microsoft.AspNetCore.ResponseCompression;
 using pepeizqs_apps_blazor_web.Componentes;
-using System.Globalization;
 using System.IO.Compression;
-using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,21 +10,23 @@ Herramientas.BaseDatos.cadenaConexion = conexionTexto;
 
 #region Compresion (Primero)
 
-builder.Services.AddResponseCompression(options =>
+builder.Services.AddResponseCompression(opciones =>
 {
-	//options.Providers.Add<BrotliCompressionProvider>();
-	options.Providers.Add<GzipCompressionProvider>();
-	options.EnableForHttps = true;
+	opciones.Providers.Add<BrotliCompressionProvider>();
+	opciones.Providers.Add<GzipCompressionProvider>();
+	opciones.EnableForHttps = true;
+	opciones.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+				new[] { "application/octet-stream", "application/rss+xml", "text/html", "text/css", "image/png", "image/x-icon", "text/javascript" });
 });
 
-//builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
-//{
-//	options.Level = CompressionLevel.Optimal;
-//});
-
-builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+builder.Services.Configure<GzipCompressionProviderOptions>(opciones =>
 {
-	options.Level = CompressionLevel.Optimal;
+	opciones.Level = CompressionLevel.Optimal;
+});
+
+builder.Services.Configure<BrotliCompressionProviderOptions>(opciones =>
+{
+	opciones.Level = CompressionLevel.Optimal;
 });
 
 #endregion
@@ -107,7 +107,56 @@ builder.Services.AddHsts(opciones =>
 
 #endregion
 
+builder.Services.AddHttpsRedirection(opciones =>
+{
+	opciones.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+});
+
 var app = builder.Build();
+
+#region Control inicial de peticiones
+
+app.Use(async (contexto, siguiente) =>
+{
+	// Redireccionar www a no-www
+	string host = contexto.Request.Host.Host;
+
+	if (host.StartsWith("www."))
+	{
+		string nuevoHost = host.Substring(4);
+		string scheme = contexto.Request.Scheme;
+		PathString rutaBase = contexto.Request.PathBase;
+		PathString rutaSlug = contexto.Request.Path;
+		QueryString queryTexto = contexto.Request.QueryString;
+
+		string nuevoEnlace = $"{scheme}://{nuevoHost}{rutaBase}{rutaSlug}{queryTexto}";
+
+		contexto.Response.StatusCode = StatusCodes.Status301MovedPermanently;
+		contexto.Response.Headers.Location = nuevoEnlace;
+		return;
+	}
+
+	try
+	{
+		await siguiente();
+
+		// Evitar peticiones a recursos que no existen despues de enviar una peticion
+		if (contexto.Response.StatusCode == 404 && contexto.Response.HasStarted == false)
+		{
+			contexto.Response.StatusCode = StatusCodes.Status301MovedPermanently;
+			contexto.Response.Headers.Location = "/";
+		}
+	}
+	catch
+	{
+		if (contexto.Response.HasStarted == false)
+		{
+			contexto.Response.StatusCode = StatusCodes.Status500InternalServerError;
+		}
+	}
+});
+
+#endregion
 
 if (!app.Environment.IsDevelopment())
 {
@@ -145,7 +194,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 #endregion
-
-app.UseStatusCodePagesWithRedirects("/error");
 
 app.Run();
