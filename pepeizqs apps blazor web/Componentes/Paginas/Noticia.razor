@@ -1,0 +1,127 @@
+﻿@page "/updates/{id:int}/{nombreNoticia?}/"
+
+@using System.Text.RegularExpressions
+
+@if (noticia != null)
+{
+    var bloques = Parsear(noticia.Contenido);
+
+    <div style="margin-bottom: 50px;">
+        <div style="display: flex; align-items: center;">
+            <h1 class="noticia-titulo">@noticia.Titulo</h1>
+
+            <div style="font-size: 17px; margin: 20px 20px 20px auto;">
+                @noticia.Fecha.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+        
+        @if (bloques.Count > 0)
+        {
+            <div style="display: flex; flex-direction: column; gap: 30px;">
+                @foreach (var bloque in bloques)
+                {
+                    switch (bloque.Tipo)
+                    {
+                        case TipoBloque.Imagen:
+                            if (bloque.Lineas.Count == 1)
+                            {
+                                <a href="@bloque.Lineas[0]" target="_blank" rel="noopener noreferrer">
+                                    <img src="@bloque.Lineas[0]" alt="@noticia.Titulo" loading="lazy" />
+                                </a>
+                            }
+                            else
+                            {
+                                <div class="noticia-galeria">
+                                    @foreach (var imagen in bloque.Lineas)
+                                    {
+                                        <a href="@imagen" target="_blank" rel="noopener noreferrer">
+                                            <img src="@imagen" alt="@noticia.Titulo" loading="lazy" />
+                                        </a>
+                                    }
+                                </div>
+                            }
+                            break;
+
+                        case TipoBloque.Lista:
+                            <div class="noticia-div">
+                                <ul class="noticia-ul">
+                                    @foreach (var item in bloque.Lineas)
+                                    {
+                                        <li>@item</li>
+                                    }
+                                </ul>
+                            </div>
+                            break;
+
+                        default:
+                            <div class="noticia-div">@bloque.Lineas[0]</div>
+                            break;
+                    }
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+
+    #nullable disable
+
+    [Parameter]
+    public int id { get; set; }
+
+    [Parameter]
+    public string nombreNoticia { get; set; }
+
+    [PersistentState] public BaseDatos.Noticia noticia { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+        {
+            noticia = await BaseDatos.Noticias.UnaNoticia(id);
+        }
+    }
+
+    enum TipoBloque { Parrafo, Imagen, Lista }
+
+    record Bloque(TipoBloque Tipo, List<string> Lineas);
+
+    static readonly Regex regexImagen = new(@"^https?://\S+\.(png|jpe?g|gif|webp|avif)(\?\S*)?$", RegexOptions.IgnoreCase);
+    static readonly Regex regexLista = new(@"^-+\s*(.+)$");
+
+    static List<Bloque> Parsear(string contenido)
+    {
+        var bloques = new List<Bloque>();
+
+        if (string.IsNullOrWhiteSpace(contenido))
+            return bloques;
+
+        foreach (var linea in contenido.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var lista = regexLista.Match(linea);
+
+            if (lista.Success)
+            {
+                if (bloques.Count > 0 && bloques[^1].Tipo == TipoBloque.Lista)
+                    bloques[^1].Lineas.Add(lista.Groups[1].Value);
+                else
+                    bloques.Add(new Bloque(TipoBloque.Lista, new List<string> { lista.Groups[1].Value }));
+            }
+            else if (regexImagen.IsMatch(linea))
+            {
+                if (bloques.Count > 0 && bloques[^1].Tipo == TipoBloque.Imagen)
+                    bloques[^1].Lineas.Add(linea);
+                else
+                    bloques.Add(new Bloque(TipoBloque.Imagen, new List<string> { linea }));
+            }
+            else
+            {
+                bloques.Add(new Bloque(TipoBloque.Parrafo, new List<string> { linea }));
+            }
+        }
+
+        return bloques;
+    }
+
+}

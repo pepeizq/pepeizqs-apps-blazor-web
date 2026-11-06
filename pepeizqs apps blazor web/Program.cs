@@ -1,12 +1,13 @@
 using Herramientas;
+using Herramientas.Conexiones;
 using Microsoft.AspNetCore.ResponseCompression;
 using pepeizqs_apps_blazor_web.Componentes;
 using System.IO.Compression;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var conexionTexto = builder.Configuration.GetConnectionString("pepeizqs_apps_webContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-Herramientas.BaseDatos.cadenaConexion = conexionTexto;
+Pepeizqapps.cadenaConexion = builder.Configuration.GetConnectionString("pepeizqs_apps_webContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+Pepedeals.cadenaConexion = builder.Configuration.GetConnectionString("pepeizqs_deals_webContextConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 #region Compresion (Primero)
 
@@ -107,10 +108,14 @@ builder.Services.AddHsts(opciones =>
 
 #endregion
 
+#region Decir a Google que deje de indexar http
+
 builder.Services.AddHttpsRedirection(opciones =>
 {
 	opciones.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
 });
+
+#endregion
 
 var app = builder.Build();
 

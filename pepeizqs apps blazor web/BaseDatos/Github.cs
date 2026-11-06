@@ -14,8 +14,13 @@ namespace BaseDatos
 			return conexion.QueryFirstOrDefault<GithubBaseDatos>(seleccionarDato, new { id });
 		}
 
-		public static List<GithubBaseDatos> Todo(SqlConnection conexion)
+		public static List<GithubBaseDatos> Todo(SqlConnection conexion = null)
 		{
+			if (conexion == null)
+			{
+				conexion = Herramientas.Conexiones.Pepeizqapps.Conectar();
+			}
+
 			string seleccionarDato = "SELECT * FROM proyectosGithub";
 
 			return conexion.Query<GithubBaseDatos>(seleccionarDato).ToList();
@@ -30,9 +35,9 @@ namespace BaseDatos
 			{
 				conexion.Execute(sqlActualizar, new { id, fecha, estrellas, forks, suscriptores });
 			}
-			catch
+			catch (Exception ex)
 			{
-
+				BaseDatos.Errores.Mensaje("Actualizar Github Proyecto", ex.Message);
 			}
 		}
 	}

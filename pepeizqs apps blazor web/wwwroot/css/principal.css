@@ -68,12 +68,6 @@
     margin-left: auto;
 }
 
-.pie {
-    background-color: var(--fondoOscuro);
-    font-size: var(--tamañoTexto);
-    color: var(--colorTexto);
-}
-
 .texto-pie {
     font-size: var(--tamañoTexto);
     color: var(--colorTexto);
@@ -126,10 +120,3 @@
     overflow: hidden;
 }
 
-.pie-github {
-    transition: transform .2s;
-}
-
-    .pie-github:hover {
-        filter: brightness(110%);
-    }

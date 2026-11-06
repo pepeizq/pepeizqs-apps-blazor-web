@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using Herramientas;
+using Herramientas.Conexiones;
 using Microsoft.Data.SqlClient;
 
 namespace Tareas
@@ -24,36 +25,34 @@ namespace Tareas
 
 			while (await timer.WaitForNextTickAsync(tokenParar))
 			{
-				using (AsyncServiceScope scope = _factoria.CreateAsyncScope())
+				try
 				{
-					using SqlConnection conexion = Herramientas.BaseDatos.Conectar();
+					using (AsyncServiceScope scope = _factoria.CreateAsyncScope())
+					{
+						using SqlConnection conexion = Pepeizqapps.Conectar();
 
-					TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(120);
+						TimeSpan tiempoSiguiente = TimeSpan.FromMinutes(120);
 
-                    if (BaseDatos.Tareas.ComprobarTareaUso(conexion, "github", tiempoSiguiente) == true)
-                    {
-                        BaseDatos.Tareas.ActualizarTareaUso(conexion, "github", DateTime.Now);
-
-                        try
-                        {
-							List<BaseDatos.GithubBaseDatos> bdGithub = new List<BaseDatos.GithubBaseDatos>();
+						if (BaseDatos.Tareas.ComprobarTareaUso(conexion, "github", tiempoSiguiente) == true)
+						{
+							BaseDatos.Tareas.ActualizarTareaUso(conexion, "github", DateTime.Now);
 
 							foreach (var proyecto in BaseDatos.Github.Todo(conexion))
-							{ 
+							{
 								GithubAPI api = await Github.CargarAPI(proyecto.Id);
 
-                                if (string.IsNullOrEmpty(api.UltimaModificacion) == false && api.Estrellas > -1 && api.Forks > -1)
-                                {
-                                    BaseDatos.Github.Actualizar(conexion, proyecto.Id, api.UltimaModificacion, api.Estrellas, api.Forks, api.Suscriptores);
-                                }
-                            }                          
-                        }
-                        catch (Exception ex)
-                        {
-							_logger.LogError(ex, "Error en TareaGithub");
+								if (string.IsNullOrEmpty(api.UltimaModificacion) == false && api.Estrellas > -1 && api.Forks > -1)
+								{
+									BaseDatos.Github.Actualizar(conexion, proyecto.Id, api.UltimaModificacion, api.Estrellas, api.Forks, api.Suscriptores);
+								}
+							}
 						}
-                    }
-                }
+					}
+				}
+				catch (Exception ex)
+				{
+					BaseDatos.Errores.Mensaje("TareaGithub", ex.Message);
+				}
 			}
 		}
 

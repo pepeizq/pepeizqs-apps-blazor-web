@@ -3,9 +3,9 @@
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace Herramientas
+namespace Herramientas.Conexiones
 {
-	public static class BaseDatos
+	public static class Pepeizqapps
 	{
 		public static string cadenaConexion;
 

@@ -28,7 +28,7 @@ namespace Herramientas
 	public class GithubAPI
 	{
 		[JsonPropertyName("id")]
-		public string Id { get; set; }
+		public long Id { get; set; }
 
 		[JsonPropertyName("pushed_at")]
 		public string UltimaModificacion { get; set; }

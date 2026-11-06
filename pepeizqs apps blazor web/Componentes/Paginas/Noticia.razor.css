@@ -1,0 +1,25 @@
+.noticia-titulo {
+    margin: 30px;
+    font-size: 30px;
+}
+
+.noticia-div {
+    padding: 30px;
+    background-color: rgba(0,0,0,.2);
+    border: 1px solid rgba(0,0,0,.2);
+}
+
+.noticia-ul {
+    margin: 0px;
+}
+
+.noticia-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+    .noticia-galeria img {
+        width: 100%;
+        height: auto;
+    }

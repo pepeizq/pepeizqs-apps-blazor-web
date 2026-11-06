@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using Herramientas.Conexiones;
 using Listados;
 using Microsoft.Data.SqlClient;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Tareas
 			{
 				try
 				{
-					using SqlConnection conexion = Herramientas.BaseDatos.Conectar();
+					using SqlConnection conexion = Pepeizqapps.Conectar();
 
 					TimeSpan tiempoSiguiente = TimeSpan.FromHours(1);
 
