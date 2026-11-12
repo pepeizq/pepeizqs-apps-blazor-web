@@ -12,7 +12,7 @@
 	string descripcion = Herramientas.Idiomas.BuscarTexto(idioma, "Subtitle", "Index");
 	string titulo = "pepeizq's apps • " + descripcion;
 	string enlace = "https://pepeizqapps.com/";
-	string imagen = "https://pepeizqapps.com/logo/logo6.png";
+	string imagen = "https://pepeizqapps.com/imagenes/pepeizqapps/logo.png";
 	string keywords = "source code";
 
 	if (string.IsNullOrEmpty(descripcion) == false)
@@ -70,7 +70,7 @@
 			  },
 			  "contactPoint": {
 				"@@type": "ContactPoint",
-				"email": "admin@pepeizqapps.com",
+				"email": "admin@pepe.deals",
 				"areaServed": "Worldwide",
 				"availableLanguage": "Spanish, English"
 			  },
@@ -82,194 +82,138 @@
 	</HeadContent>
 }
 
-<style>
-	.boton-github {
-		transition: transform .5s;
-	}
-
-		.boton-github:hover {
-			transform: scale(1.01);
-		}
-</style>
-
-<style>
-	.boton-lateral {
-		width: 100%;
-		border: 0px;
-		padding: 10px 15px;
-		height: 44px;
-	}
-</style>
-
-<div style="background-color: var(--fondoEntrada); display: flex; flex-direction: column; gap: 50px; padding: 50px;">
-	<div class="caja-diseño" style="padding: 30px; color: var(--colorTexto);">
-		@Idiomas.BuscarTexto(idioma, "Presentation", "Index")
-	</div>
-
-	<div style="display: flex; align-items: start;">
-		<div style="width: 20%; padding-right: 40px;">
-			<div style="border-right: 3px solid var(--fondoOscuro);">
+<div style="display: flex; flex-direction: column; gap: 60px; padding: 40px 0;">
+	@if (proyectosActivos?.Count > 0)
+	{
+		<div style="background-color: rgba(0,0,0,.3); border-radius: 5px; overflow: hidden; color: var(--colorTexto); font-size: 16px; margin-bottom: 40px;">
+			<div style="padding: 20px 30px; font-size: 20px; display: flex; align-items: center; gap: 20px; background: linear-gradient(270deg, #002033 0%, rgba(0,0,0,.2) 30%);">
 				<div>
-					@{
-						string fondo = "background-color: transparent;";
-
-						if (tipoSeleccionado == "Todos")
-						{
-							fondo = "background-color: var(--fondoOscuro);";
-						}
-
-						<button @onclick="@(e => CambiarProyectos(e))" class="boton-lateral" style="@fondo">
-							<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-								<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "All", "Index")</span>
-								<span style="color: var(--colorTexto); margin-left: 10px;">(@Listados.Proyectos.Generar().Count)</span>
-							</div>
-						</button>
-					}
+					pepe's deals
 				</div>
-
-				<div style="margin-top: 15px;">
-					<div>
-						@{
-							string fondoApp = "background-color: transparent;";
-
-							if (tipoSeleccionado == ProyectoTipo.App.ToString())
-							{
-								fondoApp = "background-color: var(--fondoOscuro);";
-							}
-
-							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.App))" class="boton-lateral" style="@fondoApp">
-								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "App", "Index")</span>
-									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.App))</span>
-								</div>
-							</button>
-						}
-					</div>
-
-					<div>
-						@{
-							string fondoWeb = "background-color: transparent;";
-
-							if (tipoSeleccionado == ProyectoTipo.Web.ToString())
-							{
-								fondoWeb = "background-color: var(--fondoOscuro);";
-							}
-
-							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Web))" class="boton-lateral" style="@fondoWeb">
-								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Web", "Index")</span>
-									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Web))</span>
-								</div>
-							</button>
-						}
-					</div>
-
-					<div>
-						@{
-							string fondoJuego = "background-color: transparent;";
-
-							if (tipoSeleccionado == ProyectoTipo.Juego.ToString())
-							{
-								fondoJuego = "background-color: var(--fondoOscuro);";
-							}
-
-							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Juego))" class="boton-lateral" style="@fondoJuego">
-								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Game", "Index")</span>
-									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Juego))</span>
-								</div>
-							</button>
-						}
-					</div>
-
-					<div>
-						@{
-							string fondoComplemento = "background-color: transparent;";
-
-							if (tipoSeleccionado == ProyectoTipo.Complemento.ToString())
-							{
-								fondoComplemento = "background-color: var(--fondoOscuro);";
-							}
-
-							<button @onclick="@(e => CambiarProyectos(e, ProyectoTipo.Complemento))" class="boton-lateral" style="@fondoComplemento">
-								<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-									<span style="color: var(--colorTexto);">@Idiomas.BuscarTexto(idioma, "Extension", "Index")</span>
-									<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(ProyectoTipo.Complemento))</span>
-								</div>
-							</button>
-						}
-					</div>
+				
+				<div style="margin-left: auto;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyectosActivos[0].Id + "/logo.webp", 30, 30)" alt="logo" style="width: 30px; height: 30px;" />
 				</div>
+			</div>
 
-				<div style="margin-top: 15px;">
-					@foreach (var tecnologia in tecnologias)
+			<div style="padding: 30px;">
+				<h2 style="font-size: 16px; line-height: 26px;">
+					@Idiomas.BuscarTexto(idioma, "String1", "Index")
+				</h2>
+
+				<div class="rejilla-activos" style="margin-top: 30px;">
+					@foreach (var proyecto in proyectosActivos)
 					{
-						<div>
-							@{
-								string fondoTecnologia = "background-color: transparent;";
+						<a href="@proyecto.Ubicacion" data-enhance-nav="false" class="tarjeta-proyecto tarjeta-grande" style="--acento: @proyecto.Color1;">
+							<img class="captura" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura1.webp", 400, 180)" alt="screenshot" />
 
-								if (tipoSeleccionado == tecnologia.Id.ToString())
-								{
-									fondoTecnologia = "background-color: var(--fondoOscuro);";
-								}
-
-								<button @onclick="@(e => CambiarProyectos(e, tecnologia.Id))" class="boton-lateral" style="@fondoTecnologia">
-									@if (tecnologia.MostrarNombre == false)
-									{
-										<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-											<img src="/imagenes/tecnologias/@tecnologia.Imagen" style="max-height: 20px; object-fit: contain;" alt="@tecnologia.Nombre" />
-											<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(tecnologia.Id))</span>
-										</div>
-									}
-									else
-									{
-										<div style="display: flex; align-items: center; width: 100%; height: 100%;">
-											<img src="/imagenes/tecnologias/@tecnologia.Imagen" style="max-height: 20px; object-fit: contain;" alt="@tecnologia.Nombre" />
-											<span style="color: var(--colorTexto); margin-left: 10px;">@tecnologia.Nombre</span>
-											<span style="color: var(--colorTexto); margin-left: 10px;">(@LeerProyectos(tecnologia.Id))</span>
-										</div>
-									}
-								</button>
-							}
-						</div>
+							<div class="tarjeta-descripcion" style="padding: 15px;">@Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
+						</a>
 					}
 				</div>
 			</div>
 		</div>
+	}
 
-		<div style="width: 80%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;">
-			@foreach (var proyecto in proyectos)
-			{
-				string enlaceProyecto = string.Empty;
+	@if (noticias?.Count > 0)
+	{
+		<div style="background-color: rgba(0,0,0,.3); border-radius: 5px; overflow: hidden; color: var(--colorTexto); font-size: 16px; margin-left: 40px; margin-right: 40px; margin-bottom: 40px;">
+			<div style="padding: 20px 30px; font-size: 20px; background-color: rgba(0,0,0,.2);">
+				@Idiomas.BuscarTexto(idioma, "String4", "Index")
+			</div>
 
-				if (string.IsNullOrEmpty(proyecto.Ubicacion) == true && string.IsNullOrEmpty(proyecto.Github) == false)
+			<div style="padding: 30px;">
+				@foreach (var noticia in noticias)
 				{
-					enlaceProyecto = "https://github.com/pepeizq/" + proyecto.Github + "/";
-				}
-				else
-				{
-					enlaceProyecto = proyecto.Ubicacion;
-				}
+					string enlaceNoticia = "updates/" + noticia.Id.ToString() + "/" + Herramientas.EnlaceAdaptador.Nombre(noticia.Titulo) + "/";
+					string imagenNoticia = noticia.Imagen;
 
-				<NavLink href="@enlaceProyecto" data-enhance-nav="false" style="padding: 0px; border: 0px; color: var(--colorTexto); text-decoration: none;">
-					<div class="expandir" style="display: flex; flex-direction: column; width: 100%; height: 100%; border: 1px solid var(--fondoOscuro); overflow: hidden; position: relative; background-color: @proyecto.Color1;">
-						<div style="display: flex; justify-content: center; align-items: center; overflow: hidden;">
-							<img style="height: 100px; flex-shrink: 0; min-width: 100%; object-fit: cover; opacity: 0.5;" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura1.webp", 297, 100)" alt="screenshot"/>
+					if (string.IsNullOrEmpty(imagenNoticia) == true)
+					{
+						imagenNoticia = "https://pepeizqapps.com/imagenes/pepeizqapps/logo.webp";
+					}
+
+					<a href="@enlaceNoticia" data-enhance-nav="false" class="tarjeta-proyecto tarjeta-compacta">
+						<div style="display: flex; align-items: center; gap: 30px;">
+							<img class="captura" style="width: fit-content;" src="@imagenNoticia" alt="screenshot" />
+
+							<div style="font-size: 17px;">@noticia.Titulo</div>
+
+							<div style="font-size: 15px; margin-left: auto; padding: 30px;">@noticia.Fecha.ToString("dd/MM/yyyy")</div>
 						</div>
+					</a>
+				}
+			</div>
+		</div>
+	}
 
-						<div style="display: flex; flex-direction: column; border: 2px solid @proyecto.Color1; background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); flex: 1;">
-							<div style="display: flex; align-items: center; gap: 15px; padding: 15px; background-color: @proyecto.Color1;">
-								<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/logo.webp", 40, 40)" style="width: 40px; height: 40px; object-fit: cover;" alt="logo"/>
-								<div style="font-size: 18px; width: 100%; text-align: center;">@proyecto.Nombre</div>
+	@if (proyectosParados?.Count > 0)
+	{
+		<div style="background-color: rgba(0,0,0,.3); border-radius: 5px; overflow: hidden; color: var(--colorTexto); font-size: 16px;">
+			<div style="padding: 20px 30px; font-size: 20px; background-color: rgba(0,0,0,.2);">
+				@Idiomas.BuscarTexto(idioma, "String2", "Index")
+			</div>
+
+			<div style="padding: 30px;">
+				<div>
+					@Idiomas.BuscarTexto(idioma, "String3", "Index")
+				</div>
+
+				<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; margin-bottom: 30px;">
+					<button class="chip @(tipoSeleccionado == "Todos" ? "activo" : "")" @onclick="@(e => CambiarProyectos(e))">
+						@Idiomas.BuscarTexto(idioma, "All", "Index") (@Listados.Proyectos.DevolverProyectosParados().Count)
+					</button>
+
+					@foreach (var (tipo, clave) in tiposFiltro)
+					{
+						if (LeerProyectos(tipo) > 0)
+						{
+							<button class="chip @(tipoSeleccionado == tipo.ToString() ? "activo" : "")" @onclick="@(e => CambiarProyectos(e, tipo))">
+								@Idiomas.BuscarTexto(idioma, clave, "Index") (@LeerProyectos(tipo))
+							</button>
+						}
+					}
+
+					@foreach (var tecnologia in tecnologias)
+					{
+						if (LeerProyectos(tecnologia.Id) > 0)
+						{
+							<button class="chip @(tipoSeleccionado == tecnologia.Id.ToString() ? "activo" : "")" @onclick="@(e => CambiarProyectos(e, tecnologia.Id))" title="@tecnologia.Nombre">
+								<img src="/imagenes/tecnologias/@tecnologia.Imagen" style="max-height: 18px; object-fit: contain;" alt="@tecnologia.Nombre" />
+							
+								@if (tecnologia.MostrarNombre == true)
+								{
+									<span>@tecnologia.Nombre</span>
+								}
+
+								<span>(@LeerProyectos(tecnologia.Id))</span>
+							</button>
+						}
+					}
+				</div>
+
+				<div class="rejilla-parados">
+					@foreach (var proyecto in proyectosParados)
+					{
+						string enlaceProyecto = string.IsNullOrEmpty(proyecto.Ubicacion) && !string.IsNullOrEmpty(proyecto.Github)
+							? "https://github.com/pepeizq/" + proyecto.Github + "/"
+							: proyecto.Ubicacion;
+
+						<a href="@enlaceProyecto" data-enhance-nav="false" class="tarjeta-proyecto tarjeta-compacta" style="--acento: @proyecto.Color1;">
+							<img class="captura" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura1.webp", 297, 100)" alt="screenshot" />
+
+							<div class="tarjeta-cabecera" style="background-color: rgba(0,0,0,.2);">
+								<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/logo.webp", 40, 40)" alt="logo" />
+								<div style="font-size: 16px;">@proyecto.Nombre</div>
 							</div>
 
-							<div style="padding: 15px; text-align: center;">@Herramientas.Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
-						</div>
-					</div>
-				</NavLink>
-			}
+							<div class="tarjeta-descripcion" style="padding: 15px;">@Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
+						</a>
+					}
+				</div>
+			</div>
 		</div>
-	</div>
+	}
 </div>
 
 @code {
@@ -278,12 +222,23 @@
 
 	private string idioma = "en";
 
+	[PersistentState] public List<Proyecto> proyectosActivos { get; set; }
+	[PersistentState] public List<Proyecto> proyectosParados { get; set; }
+	[PersistentState] public List<BaseDatos.Noticia> noticias { get; set; }
+
 	private List<Tecnologia> tecnologias = new List<Tecnologia>();
-	[PersistentState] public List<Proyecto> proyectos { get; set; }
+
+	private static readonly (ProyectoTipo, string)[] tiposFiltro =
+	{
+		(ProyectoTipo.App, "App"),
+		(ProyectoTipo.Web, "Web"),
+		(ProyectoTipo.Juego, "Game"),
+		(ProyectoTipo.Complemento, "Extension")
+	};
 
 	private string tipoSeleccionado = string.Empty;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
 		idioma = Contexto?.HttpContext?.Request?.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
 
@@ -295,34 +250,36 @@
 			tecnologias = tecnologias.OrderBy(x => x.Nombre).ToList();
 		}
 
-		proyectos ??= Listados.Proyectos.Generar(true);
+		proyectosActivos ??= Listados.Proyectos.DevolverProyectosActivos();
+		proyectosParados ??= Listados.Proyectos.DevolverProyectosParados(true);
+		noticias ??= await BaseDatos.Noticias.Ultimas(5);
 	}
 
 	private void CambiarProyectos(MouseEventArgs e)
 	{
 		tipoSeleccionado = "Todos";
-		proyectos = Listados.Proyectos.Generar();
+		proyectosParados = Listados.Proyectos.DevolverProyectosParados();
 	}
 
 	private void CambiarProyectos(MouseEventArgs e, ProyectoTipo tipo)
 	{
 		tipoSeleccionado = tipo.ToString();
-		proyectos = Listados.Proyectos.DevolverProyectos(tipo);
+		proyectosParados = Listados.Proyectos.DevolverProyectos(tipo, ProyectoEstado.Parado);
 	}
 
 	private void CambiarProyectos(MouseEventArgs e, TecnologiaTipo tipo)
 	{
 		tipoSeleccionado = tipo.ToString();
-		proyectos = Listados.Proyectos.DevolverProyectos(tipo);
+		proyectosParados = Listados.Proyectos.DevolverProyectos(tipo, ProyectoEstado.Parado);
 	}
 
 	private int LeerProyectos(ProyectoTipo tipo)
 	{
-		return Listados.Proyectos.DevolverProyectos(tipo).Count;
+		return Listados.Proyectos.DevolverProyectos(tipo, ProyectoEstado.Parado).Count;
 	}
 
 	private int LeerProyectos(TecnologiaTipo tipo)
 	{
-		return Listados.Proyectos.DevolverProyectos(tipo).Count;
+		return Listados.Proyectos.DevolverProyectos(tipo, ProyectoEstado.Parado).Count;
 	}
 }

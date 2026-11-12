@@ -1,17 +1,15 @@
 {
-  "String1": "Website mit Angeboten für PC-Videospiele aus offiziellen Geschäften",
-  "String2": "Ich habe diese Website als PC-Videospielspieler erstellt, der seine Entwickler gerne für ihre Spiele bezahlt. Da ich jedoch kein Millionär bin, musste ich mich über die besten Angebote informieren und jedes Spiel detailliert aufzeichnen.",
-  "String3": "Im Folgenden beschreibe ich die technischen Möglichkeiten der Website:",
-  "String4": "Automatisierte Aktualisierung",
-  "String5": "Die Website ist so automatisiert, dass sie immer nach Angeboten für Videospiele sucht. Ungefähr alle vier Stunden schließt sie den Suchzyklus nach Angeboten in allen Geschäften ab, zu denen ich Zugang habe.",
-  "String6": "Manuelles Update",
-  "String7": "Wenn ein besonderes Ereignis eintritt, kann ich Nachrichten im Internet generieren. ",
+  "String1": "Website mit PC-Spiele-Angeboten aus offiziellen Stores, inoffiziellen Stores und Marktplätzen",
+  "String2": "Ich habe diese Website als PC-Spieler erstellt, der Entwickler gerne für ihre Spiele bezahlt. Da offizielle Stores jedoch extrem wenig dafür zahlen, ihre Angebote zu listen, musste ich sie um inoffizielle Stores und Marktplätze erweitern. Ich versuche, die Seite nach und nach zu verbessern und das hinzuzufügen, was ich für notwendig halte, mit den begrenzten Ressourcen, die mir zur Verfügung stehen.",
+  "String3": "Im Folgenden beschreibe ich die technischen Fähigkeiten der Website:",
+  "String4": "Automatische Aktualisierung",
+  "String5": "Die Website ist automatisiert und sucht ständig nach Spiele-Angeboten. Etwa alle 4 Stunden durchläuft sie einen kompletten Zyklus, in dem sie die Angebote in allen Stores prüft, auf die ich Zugriff habe.",
+  "String6": "Manuelle Aktualisierung",
+  "String7": "Wenn ein besonderes Ereignis eintritt, kann ich Neuigkeiten auf der Website erstellen. In der Regel informieren diese Neuigkeiten die Besucher über vorübergehend kostenlose Spiele, Bundles mit mehreren Spielen oder neue Titel in Abodiensten.",
   "String8": "Profil für jedes Spiel",
-  "String9": "Die Website ist in der Lage, individuelle Profile für Zehntausende Spiele zu verwalten. Innerhalb jedes Profils kann ich beliebige Spieldaten bearbeiten, ohne die Datenbank manuell öffnen zu müssen.",
+  "String9": "Die Website kann einzelne Profile für zehntausende Spiele verwalten. In jedem Profil kann ich beliebige Spieldaten bearbeiten, ohne die Datenbank manuell öffnen zu müssen.",
   "String10": "E-Mail-Benachrichtigungen",
-  "String11": "Ich habe diese Funktion für Benutzer entwickelt, die E-Mail-Benachrichtigungen über Spiele erhalten möchten, deren Spiele einen neuen Mindestpreis erreichen. Sie funktioniert auch für Benachrichtigungen über neue Neuigkeiten.",
-  "String12": "Integration mit Steam",
-  "String13": "Um die Verwaltung einer Liste gewünschter Spiele zu erleichtern, habe ich eine Integration mit Steam entwickelt, um die Liste des Benutzers von dort zu importieren. ",
-  "String14": "Werbegeschenke für Benutzer",
-  "String15": "Um die Benutzer zu belohnen, die mir irgendwann bei der Website geholfen haben, habe ich diese Funktion entwickelt, damit ich eines Tages hoffentlich echte Spiele verschenken kann."
+  "String11": "Ich habe diese Funktion für Nutzer entwickelt, die gerne per E-Mail benachrichtigt werden, wenn Spiele einen neuen Tiefstpreis erreichen. Sie funktioniert auch für Benachrichtigungen über neue Neuigkeiten.",
+  "String12": "Steam-Integration",
+  "String13": "Um die Verwaltung tausender Spiele über alle PC-Plattformen hinweg zu erleichtern, habe ich eine Integration entwickelt, mit der du sowohl die Spiele, die du bereits besitzt, als auch deine Wunschliste importieren kannst."
 }

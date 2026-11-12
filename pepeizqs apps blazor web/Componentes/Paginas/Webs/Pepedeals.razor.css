@@ -1,0 +1,7 @@
+.boton-github {
+    transition: transform .5s;
+}
+
+    .boton-github:hover {
+        transform: scale(1.01);
+    }

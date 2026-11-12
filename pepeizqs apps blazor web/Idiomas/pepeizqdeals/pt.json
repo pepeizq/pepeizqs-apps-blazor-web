@@ -1,17 +1,15 @@
 {
-  "String1": "Site de ofertas de videogames para PC em lojas oficiais",
-  "String2": "Criei este site como um jogador de videogame para PC que gosta de pagar seus criadores pelos seus jogos, mas como não sou milionário precisei estar atento às melhores ofertas com um registro detalhado de cada jogo.",
+  "String1": "Site de ofertas de videojogos para PC de lojas oficiais, lojas não oficiais e marketplaces",
+  "String2": "Criei este site como jogador de PC que gosta de pagar aos programadores pelos seus jogos, mas como as lojas oficiais pagam muito pouco para listar as suas ofertas, tive de o alargar a lojas não oficiais e marketplaces. Estou a tentar melhorar o site aos poucos, acrescentando o que considero necessário com os recursos limitados de que disponho.",
   "String3": "Abaixo detalho as capacidades técnicas do site:",
-  "String4": "Atualização automatizada",
-  "String5": "O site é automatizado para estar sempre em busca de ofertas de videogame, aproximadamente a cada 4 horas ele completa cada ciclo de busca de ofertas em todas as lojas que tenho acesso.",
+  "String4": "Atualização automática",
+  "String5": "O site está automatizado para procurar sempre ofertas de videojogos. Aproximadamente a cada 4 horas completa um ciclo de verificação das ofertas em todas as lojas a que tenho acesso.",
   "String6": "Atualização manual",
-  "String7": "Quando ocorre um evento especial, posso gerar notícias na web. ",
+  "String7": "Quando ocorre um evento especial, posso gerar notícias no site. Em geral, estas notícias servem para informar os visitantes sobre jogos temporariamente gratuitos, bundles de vários jogos ou novas adições a serviços de subscrição.",
   "String8": "Perfil para cada jogo",
-  "String9": "O site é capaz de gerenciar perfis individuais para dezenas de milhares de jogos, dentro de cada perfil posso editar qualquer dado do jogo sem ter que abrir o banco de dados manualmente.",
+  "String9": "O site é capaz de gerir perfis individuais para dezenas de milhares de jogos. Dentro de cada perfil posso editar qualquer dado do jogo sem ter de abrir a base de dados manualmente.",
   "String10": "Notificações por e-mail",
-  "String11": "Desenvolvi esse recurso para aqueles usuários que gostam de receber notificações por e-mail de jogos cujos jogos atingem um novo preço mínimo, funciona também para notificações de novas notícias.",
-  "String12": "Integração com Steam",
-  "String13": "Para facilitar o gerenciamento de uma lista de jogos desejados, desenvolvi uma integração com o Steam para importar a lista de usuários de lá. ",
-  "String14": "Brindes para usuários",
-  "String15": "Para recompensar os usuários que me ajudaram com o site em algum momento desenvolvi esse recurso, espero um dia poder fazer brindes de jogos reais."
+  "String11": "Desenvolvi esta funcionalidade para os utilizadores que gostam de receber notificações por e-mail quando os jogos atingem um novo preço mínimo. Também funciona para notificações de novas notícias.",
+  "String12": "Integração com a Steam",
+  "String13": "Para facilitar a gestão de milhares de jogos em todas as plataformas de PC, desenvolvi uma integração que permite importar tanto os jogos que já tens como a tua lista de desejos."
 }

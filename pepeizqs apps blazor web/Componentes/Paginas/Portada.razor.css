@@ -1,0 +1,91 @@
+.tarjeta-proyecto {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--fondoEntrada);
+    border: 1px solid var(--acento);
+    color: var(--colorTexto);
+    text-decoration: none;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,.28);
+    transition: transform .15s ease, box-shadow .15s ease;
+    border-radius: 5px;
+}
+
+    .tarjeta-proyecto:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,.4);
+    }
+
+    .tarjeta-proyecto img.captura {
+        width: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+.tarjeta-grande img.captura {
+    height: 180px;
+}
+
+.tarjeta-compacta img.captura {
+    height: 100px;
+}
+
+.tarjeta-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+}
+
+    .tarjeta-cabecera img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+    }
+
+.tarjeta-descripcion {
+    padding: 0 15px 15px;
+    font-size: 15px;
+    opacity: .85;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background-color: rgba(0,0,0,.2);
+    color: var(--colorTexto);
+    border: 1px solid rgba(0,0,0,.5);
+    cursor: pointer;
+}
+
+    .chip.activo {
+        background-color: rgba(0,0,0,.5);
+    }
+
+    .chip:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+
+.rejilla-activos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.rejilla-parados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tarjeta-proyecto {
+        transition: none;
+    }
+
+        .tarjeta-proyecto:hover {
+            transform: none;
+        }
+}

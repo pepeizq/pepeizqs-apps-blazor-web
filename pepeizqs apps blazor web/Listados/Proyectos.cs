@@ -17,7 +17,7 @@ namespace Listados
 			return null;
 		}
 
-		public static List<Proyecto> DevolverProyectos(TecnologiaTipo tipo)
+		public static List<Proyecto> DevolverProyectos(TecnologiaTipo tipo, ProyectoEstado estado)
 		{
 			List<Proyecto> proyectos = new List<Proyecto>();
 
@@ -25,7 +25,7 @@ namespace Listados
 			{
                 foreach (var tecnologia in proyecto.Tecnologias)
                 {
-					if (tecnologia == tipo)
+					if (tecnologia == tipo && proyecto.Estado == estado)
 					{
 						proyectos.Add(proyecto);
 					}
@@ -40,13 +40,13 @@ namespace Listados
 			return proyectos;
 		}
 
-		public static List<Proyecto> DevolverProyectos(ProyectoTipo tipo)
+		public static List<Proyecto> DevolverProyectos(ProyectoTipo tipo, ProyectoEstado estado)
 		{
 			List<Proyecto> proyectos = new List<Proyecto>();
 
 			foreach (var proyecto in Generar())
 			{
-                if (proyecto.Tipo == tipo)
+                if (proyecto.Tipo == tipo && proyecto.Estado == estado)
                 {
 					proyectos.Add(proyecto);
 				}
@@ -60,7 +60,46 @@ namespace Listados
 			return proyectos;
 		}
 
-		public static List<Proyecto> Generar(bool azar = false)
+		public static List<Proyecto> DevolverProyectosActivos()
+		{
+			List<Proyecto> proyectos = new List<Proyecto>();
+
+			foreach (var proyecto in Generar())
+			{
+				if (proyecto.Estado == ProyectoEstado.Activo)
+				{
+					proyectos.Add(proyecto);
+				}
+			}
+
+			return proyectos;
+		}
+
+		public static List<Proyecto> DevolverProyectosParados(bool azar = false)
+		{
+			List<Proyecto> proyectos = new List<Proyecto>();
+
+			foreach (var proyecto in Generar())
+			{
+				if (proyecto.Estado == ProyectoEstado.Parado)
+				{
+					proyectos.Add(proyecto);
+				}
+			}
+
+			if (azar == false)
+			{
+				proyectos = proyectos.OrderBy(p => p.Nombre).ToList();
+			}
+			else
+			{
+				proyectos = proyectos.OrderBy(p => Guid.NewGuid()).ToList();
+			}
+
+			return proyectos;
+		}
+
+		public static List<Proyecto> Generar()
         {
             List<Proyecto> proyectos = new List<Proyecto>();
 
@@ -74,7 +113,8 @@ namespace Listados
                 Color2 = "#1b2838",
                 Enlace = "https://pepe.deals/",
                 Tipo = ProyectoTipo.Web,
-				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor }
+				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor },
+				Estado = ProyectoEstado.Activo
 			};
 
             proyectos.Add(proyecto1);
@@ -89,6 +129,7 @@ namespace Listados
 				Color2 = "#2f3544",
 				Tipo = ProyectoTipo.App,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
+				Estado = ProyectoEstado.Activo,
 				Intro = new Modulos.Intro()
 				{
 					Texto1 = "2",
@@ -126,6 +167,7 @@ namespace Listados
 				Github = "pepeizqs-apps-blazor-web",
                 Color1 = "#002b2b",
 				Tipo = ProyectoTipo.Web,
+				Estado = ProyectoEstado.Desconocido,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor }
 			};
 
@@ -141,6 +183,7 @@ namespace Listados
 				Color1 = "#171a21",
 				Color2 = "#2f3544",
 				Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "steam", "gog", "ea play", "origin", "ubisoft", "uplay", "battlenet", "amazon", "epic games" },
 				Intro = new Modulos.Intro()
@@ -194,6 +237,7 @@ namespace Listados
 				Color1 = "#171a21",
 				Color2 = "#2f3544",
 				Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
 				Intro = new Modulos.Intro()
 				{
@@ -228,6 +272,7 @@ namespace Listados
 				Color1 = "#1a0303",
                 Color2 = "#3d0707",
                 Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "netflix", "disney", "prime", "amazon", "spotify" },
 				Intro = new Modulos.Intro()
@@ -282,6 +327,7 @@ namespace Listados
 				Color1 = "#0f212b",
 				Color2 = "#234d65",
 				Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "steam", "gog", "ea play", "origin", "ubisoft", "uplay", "battlenet", "amazon", "epic games" },
 				Intro = new Modulos.Intro()
@@ -342,6 +388,7 @@ namespace Listados
                 Color1 = "#083116",
                 Color2 = "#0e5325",
                 Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "netflix", "disney", "prime", "amazon", "spotify" },
 				Intro = new Modulos.Intro()
@@ -402,6 +449,7 @@ namespace Listados
                 Color1 = "#00003c",
                 Color2 = "#000063",
                 Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "gog", "ea play", "origin", "ubisoft", "uplay", "battlenet", "amazon", "epic games" },
 				Intro = new Modulos.Intro()
@@ -450,6 +498,7 @@ namespace Listados
 				Color1 = "#161616",
 				Color2 = "#333333",
 				Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "steam" },
 				Intro = new Modulos.Intro()
@@ -498,6 +547,7 @@ namespace Listados
 				Color1 = "#1b2329",
 				Color2 = "#222d34",
 				Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
 				Buscador = new List<string>() { "steam" },
 				Intro = new Modulos.Intro()
@@ -552,6 +602,7 @@ namespace Listados
                 Color1 = "#202b20",
                 Color2 = "#344131",
                 Tipo = ProyectoTipo.App,
+				Estado = ProyectoEstado.Parado,
                 Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.WinUI },
                 Buscador = new List<string>() { "steam" },
 				Intro = new Modulos.Intro()
@@ -594,6 +645,7 @@ namespace Listados
 				Color1 = "#001c33",
 				Color2 = "#002c47",
 				Tipo = ProyectoTipo.Juego,
+				Estado = ProyectoEstado.Parado,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Unity },
 				Buscador = new List<string>() { "steam" },
 				NumCapturas = 9,
@@ -612,6 +664,7 @@ namespace Listados
 				Color1 = "#002033",
 				Color2 = "#1b2838",
 				Tipo = ProyectoTipo.Complemento,
+				Estado = ProyectoEstado.Activo,
 				Tecnologias = new List<TecnologiaTipo>() { TecnologiaTipo.Blazor },
 				Buscador = new List<string>() { "chrome", "edge", "Firefox" }
 			};
@@ -619,18 +672,6 @@ namespace Listados
 			proyectos.Add(proyecto14);
 
 			//-----------------------------------------
-
-			if (proyectos.Count > 0)
-            {
-				if (azar == false)
-                {
-					proyectos = proyectos.OrderBy(p => p.Nombre).ToList();
-				}
-				else
-                {
-					proyectos = proyectos.OrderBy(p => Guid.NewGuid()).ToList();
-				}
-			}
             
             return proyectos;
         }
@@ -646,6 +687,7 @@ namespace Listados
 		public string Color2;
         public string Enlace;
         public ProyectoTipo Tipo;
+		public ProyectoEstado Estado;
         public List<TecnologiaTipo> Tecnologias;
         public List<string> Buscador;
 		public int NumCapturas;
@@ -659,6 +701,13 @@ namespace Listados
         Web,
         Juego,
         Complemento,
+		Desconocido
+	}
+
+	public enum ProyectoEstado
+	{
+		Activo,
+		Parado,
 		Desconocido
 	}
 

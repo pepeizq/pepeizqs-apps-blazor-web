@@ -148,8 +148,7 @@ app.Use(async (contexto, siguiente) =>
 		// Evitar peticiones a recursos que no existen despues de enviar una peticion
 		if (contexto.Response.StatusCode == 404 && contexto.Response.HasStarted == false)
 		{
-			contexto.Response.StatusCode = StatusCodes.Status301MovedPermanently;
-			contexto.Response.Headers.Location = "/";
+			Console.WriteLine($"404 {contexto.Request.Method} {contexto.Request.Path} -> endpoint: {contexto.GetEndpoint()?.DisplayName ?? "NINGUNO"}");
 		}
 	}
 	catch

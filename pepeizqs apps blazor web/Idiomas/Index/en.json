@@ -7,9 +7,12 @@
   "App": "App",
   "Web": "Web",
   "Game": "Game",
-  "Presentation": "Below you have all the work that I have done in my free time, you can browse through apps, webs or even games. Keep in mind that I am not a multi-million dollar company, I am a single person who has developed absolutely everything (including this web you are on).",
   "Github1": "Personally, I believe that in open source and following that philosophy, every project I have worked on is available on my Github profile.",
   "Github2": "My profile:",
   "Search": "Search",
-  "Extension": "Extension"
+  "Extension": "Extension",
+  "String1": "This is my current project, which consumes most of my free time. Given its scale, it is broken down into several components because it’s not just about building a website, but also about developing and maintaining related tools.",
+  "String2": "Projects on hold",
+  "String3": "Unfortunately, I cannot keep all my projects active, but since they are open source, you can take the reins and continue their development.",
+  "String4": "Last Updates"
 }

@@ -4,13 +4,15 @@
 
 @if (noticia != null)
 {
+    <TituloySEO titulo="@noticia.Titulo" descripcion="@noticia.Contenido" enlace="@enlace" imagen="@ExtraerPrimeraImagen(noticia.Contenido)" />
+
     var bloques = Parsear(noticia.Contenido);
 
     <div style="margin-bottom: 50px;">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; background-color: rgba(0,0,0,.4); margin-top: 40px;">
             <h1 class="noticia-titulo">@noticia.Titulo</h1>
 
-            <div style="font-size: 17px; margin: 20px 20px 20px auto;">
+            <div style="font-size: 17px; margin: 25px 30px 25px auto;">
                 @noticia.Fecha.ToString("dd/MM/yyyy")
             </div>
         </div>
@@ -54,7 +56,7 @@
                             break;
 
                         default:
-                            <div class="noticia-div">@bloque.Lineas[0]</div>
+                            <div class="noticia-div">@Enlazar(bloque.Lineas[0])</div>
                             break;
                     }
                 }
@@ -75,11 +77,15 @@
 
     [PersistentState] public BaseDatos.Noticia noticia { get; set; }
 
+    public string enlace = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         if (id > 0)
         {
             noticia = await BaseDatos.Noticias.UnaNoticia(id);
+
+            enlace = "https://pepeizqapps.com/updates/" + id.ToString() + "/" + nombreNoticia;
         }
     }
 
@@ -92,28 +98,38 @@
 
     static List<Bloque> Parsear(string contenido)
     {
-        var bloques = new List<Bloque>();
+        List<Bloque> bloques = new List<Bloque>();
 
-        if (string.IsNullOrWhiteSpace(contenido))
-            return bloques;
-
-        foreach (var linea in contenido.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        if (string.IsNullOrWhiteSpace(contenido) == true)
         {
-            var lista = regexLista.Match(linea);
+            return bloques;
+        }
+        
+        foreach (string linea in contenido.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            Match lista = regexLista.Match(linea);
 
             if (lista.Success)
             {
                 if (bloques.Count > 0 && bloques[^1].Tipo == TipoBloque.Lista)
+                {
                     bloques[^1].Lineas.Add(lista.Groups[1].Value);
+                }
                 else
+                {
                     bloques.Add(new Bloque(TipoBloque.Lista, new List<string> { lista.Groups[1].Value }));
+                }
             }
             else if (regexImagen.IsMatch(linea))
             {
                 if (bloques.Count > 0 && bloques[^1].Tipo == TipoBloque.Imagen)
+                {
                     bloques[^1].Lineas.Add(linea);
+                }    
                 else
+                {
                     bloques.Add(new Bloque(TipoBloque.Imagen, new List<string> { linea }));
+                }
             }
             else
             {
@@ -124,4 +140,41 @@
         return bloques;
     }
 
+    static string ExtraerPrimeraImagen(string contenido)
+    {
+        if (string.IsNullOrWhiteSpace(contenido))
+        {
+            return null;
+        }
+
+        foreach (var linea in contenido.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            if (regexImagen.IsMatch(linea))
+            {
+                return linea;
+            }
+        }
+
+        return null;
+    }
+
+    static readonly Regex regexDominio = new(
+        @"(?<![@\w./-])(?:https?://)?(?:[a-z0-9-]+\.)+(?:com|net|org|es|io|app|deals)\b(?:/[^\s<]*)?",
+        RegexOptions.IgnoreCase);
+
+    static MarkupString Enlazar(string texto)
+    {
+        string codificado = System.Net.WebUtility.HtmlEncode(texto);
+
+        string resultado = regexDominio.Replace(codificado, m =>
+        {
+            string url = m.Value.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                ? m.Value
+                : "https://" + m.Value;
+
+            return $"<a href=\"{url}\" target=\"_blank\" rel=\"noopener noreferrer\">{m.Value}</a>";
+        });
+
+        return new MarkupString(resultado);
+    }
 }

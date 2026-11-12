@@ -7,9 +7,12 @@
   "App": "Aplicativo",
   "Web": "Rede",
   "Game": "Jogo",
-  "Presentation": "Abaixo você encontra todos os trabalhos que tenho realizado no meu tempo livre, você pode navegar por aplicativos, webs ou até jogos. ",
   "Github1": "Pessoalmente, acredito que no código aberto e seguindo essa filosofia, todos os projetos em que trabalhei estão disponíveis no meu perfil do Github.",
   "Github2": "Meu perfil:",
   "Search": "Procurar",
-  "Extension": "Extensão"
+  "Extension": "Extensão",
+  "String1": "Este é o meu projeto atual, que consome a maior parte do meu tempo livre. Dada a sua dimensão, está dividido em vários componentes, pois não se trata apenas de criar um site, mas também de desenvolver e manter ferramentas relacionadas.",
+  "String2": "Projetos em pausa",
+  "String3": "Infelizmente, não consigo manter todos os meus projetos ativos, mas, como são open source, podes pegar nas rédeas e continuar o seu desenvolvimento.",
+  "String4": "Últimas atualizações"
 }

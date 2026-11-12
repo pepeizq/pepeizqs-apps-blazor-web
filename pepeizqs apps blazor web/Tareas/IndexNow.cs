@@ -90,7 +90,7 @@ namespace Tareas
 				}
 				catch (Exception ex)
 				{
-					
+					BaseDatos.Errores.Mensaje("Error - pepeizq's apps", ex.Message);
 				}
 			}
 		}

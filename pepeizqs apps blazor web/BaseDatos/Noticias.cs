@@ -12,17 +12,47 @@ namespace BaseDatos
 		{
 			string sql = "SELECT * FROM noticias WHERE id = @id";
 
-			return await Pepeizqapps.Select(async conexion =>
+			try
 			{
-				return await conexion.QueryFirstOrDefaultAsync<Noticia>(sql, new { id });
-			});
+				return await Pepeizqapps.Select(async conexion =>
+				{
+					return await conexion.QueryFirstOrDefaultAsync<Noticia>(sql, new { id });
+				});
+			}
+			catch (Exception ex)
+			{
+				BaseDatos.Errores.Mensaje("Noticia Una - pepeizq's apps", ex.Message);
+			}
+
+			return null;
+		}
+
+		public static async Task<List<Noticia>> Ultimas(int cantidad)
+		{
+			string busqueda = "SELECT TOP " + cantidad.ToString() + " * FROM noticias ORDER BY id DESC";
+
+			try
+			{
+				return await Pepeizqapps.Select(async conexion =>
+				{
+					return (await conexion.QueryAsync<Noticia>(busqueda)).ToList();
+				});
+			}
+			catch (Exception ex)
+			{
+				BaseDatos.Errores.Mensaje("Noticias Ultimas - pepeizq's apps", ex.Message);
+			}
+
+			return null;
 		}
 	}
 
 	public class Noticia
 	{
+		public int Id { get; set; }
 		public string Titulo { get; set; }
 		public string Contenido { get; set; }
 		public DateTime Fecha { get; set; }
+		public string Imagen { get; set; }
 	}
 }

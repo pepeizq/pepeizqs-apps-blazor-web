@@ -1,17 +1,15 @@
 {
-  "String1": "Sito Web di offerte di videogiochi per PC da negozi ufficiali",
-  "String2": "Ho creato questo sito Web come giocatore di videogiochi per PC a cui piace pagare i propri creatori per i loro giochi, ma poiché non sono un milionario avevo bisogno di essere a conoscenza delle migliori offerte con una registrazione dettagliata di ogni gioco.",
-  "String3": "Di seguito descrivo in dettaglio le capacità tecniche del sito web:",
+  "String1": "Sito web di offerte di videogiochi per PC da negozi ufficiali, negozi non ufficiali e marketplace",
+  "String2": "Ho creato questo sito come giocatore PC a cui piace pagare gli sviluppatori per i loro giochi, ma dato che i negozi ufficiali pagano pochissimo per pubblicare le loro offerte, ho dovuto estenderlo ai negozi non ufficiali e ai marketplace. Cerco di migliorare il sito poco alla volta, aggiungendo ciò che ritengo necessario con le risorse limitate che ho a disposizione.",
+  "String3": "Di seguito descrivo le capacità tecniche del sito:",
   "String4": "Aggiornamento automatico",
-  "String5": "Il sito Web è automatizzato per essere sempre alla ricerca di offerte di videogiochi, circa ogni 4 ore completa ogni ciclo di visualizzazione delle offerte in tutti i negozi a cui ho accesso.",
+  "String5": "Il sito è automatizzato per cercare sempre offerte di videogiochi: circa ogni 4 ore completa un ciclo di controllo delle offerte in tutti i negozi a cui ho accesso.",
   "String6": "Aggiornamento manuale",
-  "String7": "Quando si verifica un evento speciale, posso generare notizie sul web. ",
+  "String7": "Quando si verifica un evento speciale, posso generare notizie sul sito. In genere queste notizie servono a informare i visitatori su giochi temporaneamente gratuiti, bundle di più giochi o nuove aggiunte ai servizi in abbonamento.",
   "String8": "Profilo per ogni gioco",
-  "String9": "Il sito è in grado di gestire profili individuali per decine di migliaia di giochi, all'interno di ogni profilo posso modificare qualsiasi dato di gioco senza dover aprire manualmente il database.",
-  "String10": "Notifiche e-mail",
-  "String11": "Ho sviluppato questa funzionalità per quegli utenti che desiderano ricevere notifiche via email dei giochi i cui giochi raggiungono un nuovo prezzo minimo, funziona anche per le notifiche di nuove notizie.",
+  "String9": "Il sito è in grado di gestire profili individuali per decine di migliaia di giochi. All'interno di ogni profilo posso modificare qualsiasi dato del gioco senza dover aprire manualmente il database.",
+  "String10": "Notifiche via e-mail",
+  "String11": "Ho sviluppato questa funzione per gli utenti a cui piace ricevere notifiche via e-mail quando i giochi raggiungono un nuovo prezzo minimo. Funziona anche per le notifiche di nuove notizie.",
   "String12": "Integrazione con Steam",
-  "String13": "Per facilitare la gestione dell'elenco dei giochi desiderati, ho sviluppato un'integrazione con Steam per importare da lì l'elenco degli utenti. ",
-  "String14": "Omaggi per gli utenti",
-  "String15": "Per premiare quegli utenti che mi hanno aiutato con il sito web ad un certo punto ho sviluppato questa funzionalità, spero che un giorno potrò fare veri e propri omaggi di giochi."
+  "String13": "Per semplificare la gestione di migliaia di giochi su tutte le piattaforme PC, ho sviluppato un'integrazione che permette di importare sia i giochi che possiedi già sia la tua lista dei desideri."
 }

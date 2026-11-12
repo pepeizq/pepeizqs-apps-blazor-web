@@ -67,43 +67,33 @@
 	</HeadContent>
 }
 
-<style>
-	.boton-github {
-		transition: transform .5s;
-	}
-
-		.boton-github:hover {
-			transform: scale(1.01);
-		}
-</style>
-
 @if (proyecto != null)
 {
-	<div style="display: flex; flex-direction: column; background-color: var(--fondoEntrada); padding: 30px; gap: 30px;">
-		<div class="caja-diseño" style="background: linear-gradient(180deg, @proyecto.Color1 0%, var(--fondoEntrada) 211.07%); display: flex; align-items: center;">
+	<div style="background: linear-gradient(180deg, @proyecto.Color1 0%, var(--fondoEntrada) 250%); display: flex; align-items: center;">
+		@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
+		{
+			<a href="@proyecto.Enlace" target="_blank">
+				<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
+			</a>
+		}
+		else
+		{
+			<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
+		}
+
+		<div style="padding: 20px 30px;">
+			<div style="font-size: 22px;">@proyecto.Nombre</div>
+			<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
+
 			@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
 			{
-				<a href="@proyecto.Enlace" target="_blank">
-					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
-				</a>
+				<div style="margin-top: 10px;"><a href="@proyecto.Enlace" target="_blank" style="text-decoration: none; ">@proyecto.Enlace</a></div>
 			}
-			else
-			{
-				<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/logo.webp", 140, 140)" style="width: 140px; height: 140px;" alt="logo" />
-			}
-
-			<div style="padding: 20px 30px;">
-				<div style="font-size: 22px;">@proyecto.Nombre</div>
-				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
-
-				@if (string.IsNullOrEmpty(proyecto.Enlace) == false)
-				{
-					<div style="margin-top: 10px;"><a href="@proyecto.Enlace" target="_blank" style="text-decoration: none; ">@proyecto.Enlace</a></div>
-				}
-			</div>
 		</div>
+	</div>
 
-		<div class="caja-diseño">
+	<div style="display: flex; flex-direction: column; background-color: var(--fondoEntrada); padding: 30px; gap: 30px;">
+		<div style="overflow: hidden; border-radius: 5px;">
 			<a href="https://github.com/pepeizq/@proyecto.Github" target="_blank" style="text-decoration: none;">
 				<div class="boton-github" style="background-color: #24292e; color: var(--colorTexto); display: flex; align-items: center; padding: 15px 25px;" title="@Herramientas.Idiomas.BuscarTexto(idioma, "String7", "Github")">
 					<svg style="width: 24px; height: 24px; fill: var(--colorTexto);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -136,136 +126,104 @@
 				</div>
 			</a>
 		</div>
+		
+		<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px;">
+			<div>
+				@Herramientas.Idiomas.BuscarTexto(idioma, "String2", proyecto.Id)
+			</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); padding: 40px;">
-				<div>
-					@Herramientas.Idiomas.BuscarTexto(idioma, "String2", proyecto.Id)
-				</div>
-
-				<div style="margin-top: 20px;">
-					@Herramientas.Idiomas.BuscarTexto(idioma, "String3", proyecto.Id)
-				</div>
+			<div style="margin-top: 20px;">
+				@Herramientas.Idiomas.BuscarTexto(idioma, "String3", proyecto.Id)
 			</div>
 		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura1.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura1.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+		<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px; display: flex; align-items: center;">
+			<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
+				<a href="/imagenes/@proyecto.Id/captura1.webp" target="_blank" style="margin-right: 20px;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura1.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 
-					<a href="/imagenes/@proyecto.Id/captura4.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura4.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
+				<a href="/imagenes/@proyecto.Id/captura4.webp" target="_blank">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura2.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
+			</div>
 
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String4", proyecto.Id)</div>
+			<div style="width: 55%;">
+				<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String4", proyecto.Id)</div>
 
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String5", proyecto.Id)</div>
-				</div>
+				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String5", proyecto.Id)</div>
 			</div>
 		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura2.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura2.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+		<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px; display: flex; align-items: center;">
+			<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
+				<a href="/imagenes/@proyecto.Id/captura2.webp" target="_blank" style="margin-right: 20px;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura3.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 
-					<a href="/imagenes/@proyecto.Id/captura3.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura3.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
+				<a href="/imagenes/@proyecto.Id/captura3.webp" target="_blank">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura4.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
+			</div>
 
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String6", proyecto.Id)</div>
+			<div style="width: 55%;">
+				<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String6", proyecto.Id)</div>
 
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String7", proyecto.Id)</div>
-				</div>
+				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String7", proyecto.Id)</div>
 			</div>
 		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura5.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura5.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+		<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px; display: flex; align-items: center;">
+			<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
+				<a href="/imagenes/@proyecto.Id/captura5.webp" target="_blank" style="margin-right: 20px;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura5.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 
-					<a href="/imagenes/@proyecto.Id/captura6.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura6.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
+				<a href="/imagenes/@proyecto.Id/captura6.webp" target="_blank">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura6.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
+			</div>
 
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String8", proyecto.Id)</div>
+			<div style="width: 55%;">
+				<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String8", proyecto.Id)</div>
 
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String9", proyecto.Id)</div>
-				</div>
+				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String9", proyecto.Id)</div>
 			</div>
 		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura7.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura7.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+		<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px; display: flex; align-items: center;">
+			<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
+				<a href="/imagenes/@proyecto.Id/captura7.webp" target="_blank" style="margin-right: 20px;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura7.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 
-					<a href="/imagenes/@proyecto.Id/captura8.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura8.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
+				<a href="/imagenes/@proyecto.Id/captura8.webp" target="_blank">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura8.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
+			</div>
 
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String10", proyecto.Id)</div>
+			<div style="width: 55%;">
+				<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String10", proyecto.Id)</div>
 
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String11", proyecto.Id)</div>
-				</div>
+				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String11", proyecto.Id)</div>
 			</div>
 		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura9.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura9.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+		<div style="background-color: color-mix(in oklab, @proyecto.Color2 50%, var(--fondoOscuro)); border-radius: 5px; padding: 40px; display: flex; align-items: center;">
+			<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
+				<a href="/imagenes/@proyecto.Id/captura9.webp" target="_blank" style="margin-right: 20px;">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura9.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 
-					<a href="/imagenes/@proyecto.Id/captura10.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura10.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
-
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String12", proyecto.Id)</div>
-
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String13", proyecto.Id)</div>
-				</div>
+				<a href="/imagenes/@proyecto.Id/captura10.webp" target="_blank">
+					<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura10.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
+				</a>
 			</div>
-		</div>
 
-		<div class="caja-diseño">
-			<div style="background-color: color-mix(in oklab, @proyecto.Color1 50%, var(--fondoOscuro)); padding: 40px; display: flex; align-items: center;">
-				<div style="display: flex; align-items: center; width: 55%; padding-right: 50px;">
-					<a href="/imagenes/@proyecto.Id/captura11.webp" target="_blank" style="margin-right: 20px;">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura11.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
+			<div style="width: 55%;">
+				<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String12", proyecto.Id)</div>
 
-					<a href="/imagenes/@proyecto.Id/captura12.webp" target="_blank">
-						<img src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + @proyecto.Id + "/captura12.webp")" class="expandir" style="width: 100%; border: 1px solid var(--colorEnlace);" />
-					</a>
-				</div>
-
-				<div style="width: 55%;">
-					<div style="font-size: 20px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String14", proyecto.Id)</div>
-
-					<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String15", proyecto.Id)</div>
-				</div>
+				<div style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String13", proyecto.Id)</div>
 			</div>
 		</div>
 	</div>

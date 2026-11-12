@@ -1,0 +1,12 @@
+.cabecera-icono {
+    width: 28px;
+    height: 28px;
+    fill: var(--colorEnlace);
+    transition: transform .15s ease;
+}
+
+a:hover > .cabecera-icono,
+a:focus-visible > .cabecera-icono {
+    transform: scale(1.05);
+    fill: var(--colorTextoHover);
+}

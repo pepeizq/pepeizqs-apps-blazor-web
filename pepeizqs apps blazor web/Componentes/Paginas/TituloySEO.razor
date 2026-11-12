@@ -1,0 +1,120 @@
+﻿<HeadContent>
+	<PageTitle>@tituloFinal</PageTitle>
+
+	<meta name="og:title" Content="@tituloFinal" />
+	<meta name="description" content="@descripcionFinal" />
+	<meta name="og:description" content="@descripcionFinal" />
+	<meta name="og:url" content="@enlace" />
+	
+	@if (string.IsNullOrEmpty(imagen) == false)
+	{
+		<meta property="og:image" content="@imagen" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content="@imagen" />
+	}
+
+	<meta name="og:site_name" content="pepeizq's apps" />
+	<meta name="og:type" content="website" />
+	<meta name="robots" content="index, follow" />
+	<meta name="keywords" content="@keywordsFinal" />
+</HeadContent>
+
+@code {
+
+	#nullable disable
+
+	[Parameter]
+	public string titulo { get; set; }
+
+	[Parameter]
+	public string descripcion { get; set; }
+
+	[Parameter]
+	public string enlace { get; set; }
+
+	[Parameter]
+	public string imagen { get; set; }
+
+	[Parameter]
+	public string keywords { get; set; }
+
+	private const string sufijo = " • pepeizq's apps";
+
+	private string tituloFinal;
+	private string descripcionFinal;
+	private string keywordsFinal;
+
+	protected override void OnParametersSet()
+	{
+		tituloFinal = Recortar(titulo, 60 - sufijo.Length) + sufijo;
+		descripcionFinal = Recortar(descripcion, 160);
+
+		if (string.IsNullOrEmpty(imagen) == false)
+		{
+			imagen = "https://pepeizqapps.com/imagenes/pepeizqapps/logo.png";
+		}
+
+		if (string.IsNullOrEmpty(descripcion) == false && string.IsNullOrEmpty(keywords) == true)
+		{
+			keywordsFinal = GenerarKeywords(descripcion, 5);
+		}
+
+		if (string.IsNullOrEmpty(keywords) == true)
+		{
+			keywordsFinal = "pepeizqapps, source code";
+		}
+	}
+
+	private static string Recortar(string texto, int maximo)
+	{
+		if (string.IsNullOrWhiteSpace(texto))
+		{
+			return string.Empty;
+		}
+
+		texto = System.Text.RegularExpressions.Regex.Replace(texto.Trim(), @"\s+", " ");
+
+		if (texto.Length <= maximo)
+		{
+			return texto;
+		}
+
+		string corte = texto[..(maximo - 1)];
+		int ultimoEspacio = corte.LastIndexOf(' ');
+
+		if (ultimoEspacio > maximo * 0.6)
+		{
+			corte = corte[..ultimoEspacio];
+		}
+
+		return corte.TrimEnd(' ', ',', '.', ';', ':') + "…";
+	}
+
+	private static readonly HashSet<string> palabrasVacias = new(StringComparer.OrdinalIgnoreCase)
+	{
+		// es
+		"el", "la", "los", "las", "de", "del", "y", "en", "un", "una", "unos", "unas", "con", "para", "por", "que", "como", "más", "sus", "este", "esta", "pero",
+		// en
+		"the", "and", "for", "with", "that", "this", "from", "your", "are", "you", "can", "has", "have", "will"
+	};
+
+	private static string GenerarKeywords(string texto, int cantidad)
+	{
+		if (string.IsNullOrWhiteSpace(texto) == true)
+		{
+			return string.Empty;
+		}
+
+		var palabras = System.Text.RegularExpressions.Regex
+			.Matches(texto.ToLowerInvariant(), @"[\p{L}\p{N}]{4,}")
+			.Select(m => m.Value)
+			.Where(p => palabrasVacias.Contains(p) == false)
+			.GroupBy(p => p)
+			.OrderByDescending(g => g.Count())
+			.ThenBy(g => g.Key)
+			.Take(cantidad)
+			.Select(g => g.Key);
+
+		return string.Join(", ", palabras);
+	}
+}
