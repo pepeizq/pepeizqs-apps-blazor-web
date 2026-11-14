@@ -1,0 +1,27 @@
+.tarjeta-proyecto {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--fondoEntrada);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--colorTexto);
+    text-decoration: none;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,.28);
+    transition: transform .15s ease, box-shadow .15s ease;
+    border-radius: 5px;
+}
+
+    .tarjeta-proyecto:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,.4);
+    }
+
+    .tarjeta-proyecto img.captura {
+        width: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+.tarjeta-compacta img.captura {
+    height: 200px;
+}

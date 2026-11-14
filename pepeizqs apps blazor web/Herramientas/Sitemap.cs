@@ -43,7 +43,7 @@ namespace Herramientas
 				}
 			}
 
-			List<BaseDatos.Noticia> noticias = await BaseDatos.Noticias.Ultimas(10);
+			List<BaseDatos.Noticia> noticias = await BaseDatos.Noticias.UltimasReducida(10);
 
 			if (noticias?.Count > 0)
 			{

@@ -2,13 +2,14 @@
     display: flex;
     flex-direction: column;
     background-color: var(--fondoEntrada);
-    border: 1px solid var(--acento);
+    border: 1px solid rgba(255,255,255,0.2);
     color: var(--colorTexto);
     text-decoration: none;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0,0,0,.28);
     transition: transform .15s ease, box-shadow .15s ease;
     border-radius: 5px;
+    position: relative;
 }
 
     .tarjeta-proyecto:hover {
@@ -49,6 +50,20 @@
     opacity: .85;
 }
 
+.tarjeta-icono-estilo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    background-color: var(--fondoEntrada);
+}
+
+.tarjeta-icono-posicion {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+
 .chip {
     display: inline-flex;
     align-items: center;
@@ -58,6 +73,7 @@
     color: var(--colorTexto);
     border: 1px solid rgba(0,0,0,.5);
     cursor: pointer;
+    border-radius: 5px;
 }
 
     .chip.activo {

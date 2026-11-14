@@ -11,7 +11,7 @@
 <TituloySEO titulo="@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")" descripcion="@Herramientas.Idiomas.BuscarTexto(idioma, "String1", "Privacy")" enlace="https://pepeizqapps.com/privacy" />
 
 <div style="padding: 50px; border-radius: 5px; overflow: hidden;">
-    <div style="font-size: 22px; padding: 25px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit;">
+    <div style="font-size: 22px; padding: 20px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit;">
         @Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")
     </div>
 
@@ -21,7 +21,7 @@
         <ul style="margin-top: 20px;">
             <li>@Herramientas.Idiomas.BuscarTexto(idioma, "String2", "Privacy")</li>
             <li style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String3", "Privacy")</li>
-            <li style="margin-top: 10px;">@Enlazar(Herramientas.Idiomas.BuscarTexto(idioma, "String4", "Privacy"))</li>
+            <li style="margin-top: 10px;">@Herramientas.AñadirEnlaces.Enlazar(Herramientas.Idiomas.BuscarTexto(idioma, "String4", "Privacy"))</li>
             <li style="margin-top: 10px;">@Herramientas.Idiomas.BuscarTexto(idioma, "String5", "Privacy")</li>
         </ul>
 
@@ -32,25 +32,5 @@
 @code {
 
     #nullable disable
-
-    static readonly Regex regexDominio = new(
-        @"(?<![@\w./-])(?:https?://)?(?:[a-z0-9-]+\.)+(?:com|net|org|es|io|app|deals)\b(?:/[^\s<]*)?",
-        RegexOptions.IgnoreCase);
-
-    static MarkupString Enlazar(string texto)
-    {
-        string codificado = System.Net.WebUtility.HtmlEncode(texto);
-
-        string resultado = regexDominio.Replace(codificado, m =>
-        {
-            string url = m.Value.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-                ? m.Value
-                : "https://" + m.Value;
-
-            return $"<a href=\"{url}\" target=\"_blank\" rel=\"noopener noreferrer\">{m.Value}</a>";
-        });
-
-        return new MarkupString(resultado);
-    }
 
 }

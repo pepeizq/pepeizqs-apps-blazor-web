@@ -139,12 +139,6 @@ namespace Listados
 				{
 					new Modulos.Seccion()
 					{
-						Captura = "1",
-						Texto1 = "4",
-						Texto2 = "5"
-					},
-					new Modulos.Seccion()
-					{
 						Captura = "2",
 						Texto1 = "6",
 						Texto2 = "7"
@@ -154,6 +148,12 @@ namespace Listados
 						Captura = "3",
 						Texto1 = "8",
 						Texto2 = "9"
+					},
+					new Modulos.Seccion()
+					{
+						Captura = "5",
+						Texto1 = "10",
+						Texto2 = "11"
 					}
 				}
 			};

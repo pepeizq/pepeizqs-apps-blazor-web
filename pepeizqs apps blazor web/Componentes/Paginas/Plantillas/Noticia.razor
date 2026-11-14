@@ -9,7 +9,7 @@
     var bloques = Parsear(noticia.Contenido);
 
     <div style="margin-bottom: 50px;">
-        <div style="display: flex; align-items: center; background-color: rgba(0,0,0,.4); margin-top: 40px;">
+        <div style="display: flex; align-items: center; background-color: rgba(0,0,0,.4); margin-top: 40px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <h1 class="noticia-titulo">@noticia.Titulo</h1>
 
             <div style="font-size: 17px; margin: 25px 30px 25px auto;">
@@ -27,8 +27,8 @@
                         case TipoBloque.Imagen:
                             if (bloque.Lineas.Count == 1)
                             {
-                                <a href="@bloque.Lineas[0]" target="_blank" rel="noopener noreferrer">
-                                    <img src="@bloque.Lineas[0]" alt="@noticia.Titulo" loading="lazy" />
+                                <a href="@bloque.Lineas[0]" target="_blank" rel="noopener noreferrer" class="noticia-imagen-enlace" style="margin: 0px 30px; width: fit-content; max-width: 60%; background-color: rgba(0,0,0,.2); border: 1px solid rgba(0,0,0,.2); padding: 5px; border-radius: 5px;">
+                                    <img src="@bloque.Lineas[0]" alt="@noticia.Titulo" loading="lazy" style="max-width: 100%; border-radius: 5px;" />
                                 </a>
                             }
                             else
@@ -36,8 +36,8 @@
                                 <div class="noticia-galeria">
                                     @foreach (var imagen in bloque.Lineas)
                                     {
-                                        <a href="@imagen" target="_blank" rel="noopener noreferrer">
-                                            <img src="@imagen" alt="@noticia.Titulo" loading="lazy" />
+                                        <a href="@imagen" target="_blank" rel="noopener noreferrer" class="noticia-imagen-enlace">
+                                            <img src="@imagen" alt="@noticia.Titulo" loading="lazy" style="max-width: 100%;" />
                                         </a>
                                     }
                                 </div>
@@ -56,7 +56,7 @@
                             break;
 
                         default:
-                            <div class="noticia-div">@Enlazar(bloque.Lineas[0])</div>
+                            <div class="noticia-div">@Herramientas.AñadirEnlaces.Enlazar(bloque.Lineas[0])</div>
                             break;
                     }
                 }
@@ -156,25 +156,5 @@
         }
 
         return null;
-    }
-
-    static readonly Regex regexDominio = new(
-        @"(?<![@\w./-])(?:https?://)?(?:[a-z0-9-]+\.)+(?:com|net|org|es|io|app|deals)\b(?:/[^\s<]*)?",
-        RegexOptions.IgnoreCase);
-
-    static MarkupString Enlazar(string texto)
-    {
-        string codificado = System.Net.WebUtility.HtmlEncode(texto);
-
-        string resultado = regexDominio.Replace(codificado, m =>
-        {
-            string url = m.Value.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-                ? m.Value
-                : "https://" + m.Value;
-
-            return $"<a href=\"{url}\" target=\"_blank\" rel=\"noopener noreferrer\">{m.Value}</a>";
-        });
-
-        return new MarkupString(resultado);
     }
 }
