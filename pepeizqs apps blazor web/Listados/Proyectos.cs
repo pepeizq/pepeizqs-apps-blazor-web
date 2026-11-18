@@ -154,6 +154,12 @@ namespace Listados
 						Captura = "5",
 						Texto1 = "10",
 						Texto2 = "11"
+					},
+					new Modulos.Seccion()
+					{
+						Captura = "6",
+						Texto1 = "12",
+						Texto2 = "13"
 					}
 				}
 			};

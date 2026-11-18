@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using Dapper;
+using Herramientas.Conexiones;
 using Microsoft.Data.SqlClient;
 
 namespace BaseDatos
@@ -14,16 +15,23 @@ namespace BaseDatos
 			return conexion.QueryFirstOrDefault<GithubBaseDatos>(seleccionarDato, new { id });
 		}
 
-		public static List<GithubBaseDatos> Todo(SqlConnection conexion = null)
+		public static async Task<List<GithubBaseDatos>> Todo()
 		{
-			if (conexion == null)
+			string sql = "SELECT * FROM proyectosGithub";
+
+			try
 			{
-				conexion = Herramientas.Conexiones.Pepeizqapps.Conectar();
+				return await Pepeizqapps.Select(async conexion =>
+				{
+					return (await conexion.QueryAsync<GithubBaseDatos>(sql)).ToList();
+				});
+			}
+			catch (Exception ex)
+			{
+				BaseDatos.Errores.Mensaje("Github Todo - pepeizq's apps", ex.Message);
 			}
 
-			string seleccionarDato = "SELECT * FROM proyectosGithub";
-
-			return conexion.Query<GithubBaseDatos>(seleccionarDato).ToList();
+			return null;
 		}
 
 		public static void Actualizar(SqlConnection conexion, string id, string fecha, int estrellas, int forks, int suscriptores)

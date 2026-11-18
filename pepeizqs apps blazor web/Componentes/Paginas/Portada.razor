@@ -104,8 +104,15 @@
 				<div class="rejilla-activos" style="margin-top: 30px;">
 					@foreach (var proyecto in proyectosActivos)
 					{
+						string captura = "1";
+
+						if (proyecto.Secciones?.Count > 0)
+						{
+							captura = proyecto.Secciones[0].Captura;
+						}
+
 						<a href="@proyecto.Ubicacion" data-enhance-nav="false" class="tarjeta-proyecto tarjeta-grande" style="--acento: @proyecto.Color1;">
-							<img class="captura" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura1.webp", 400, 180)" alt="screenshot" />
+							<img class="captura" src="@Herramientas.Imagenes.ServidorExterno("/imagenes/" + proyecto.Id + "/captura" + captura + ".webp", 400, 180)" alt="screenshot" />
 
 							<div class="tarjeta-descripcion" style="padding: 15px;">@Idiomas.BuscarTexto(idioma, "String1", proyecto.Id)</div>
 						
@@ -150,6 +157,12 @@
 						</a>
 					}
 				</div>
+
+				<div style="margin-top: 30px; text-align: center;">
+					<a href="/cost-pepedeals">
+						@Idiomas.BuscarTexto(idioma, "String5", "Index")
+					</a>
+				</div>
 			</div>
 		</div>
 	}
@@ -174,7 +187,7 @@
 
 					<a href="@enlaceNoticia" data-enhance-nav="false" class="tarjeta-proyecto tarjeta-compacta">
 						<div style="display: flex; align-items: center; gap: 30px;">
-							<img class="captura" style="width: fit-content; max-width: 100px; object-fit: contain; background-color: rgba(0,0,0,.1);" src="@imagenNoticia" alt="screenshot" />
+							<img class="captura" style="width: fit-content; max-width: 100px; object-fit: contain; background-color: rgba(0,0,0,.1); min-width: 100px;" src="@imagenNoticia" alt="screenshot" />
 
 							<div style="font-size: 17px;">@noticia.Titulo</div>
 

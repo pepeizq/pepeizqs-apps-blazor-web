@@ -29,6 +29,14 @@ namespace Herramientas
 
 			sb.Append(textoActualizaciones);
 
+			string textoCoste = "<url>" + Environment.NewLine +
+					"<loc>https://pepeizqapps.com/cost-pepedeals/</loc>" + Environment.NewLine +
+					"<changefreq>daily</changefreq>" + Environment.NewLine +
+					"<priority>0.7</priority> " + Environment.NewLine +
+					"</url>";
+
+			sb.Append(textoCoste);
+
 			foreach (var proyecto in Listados.Proyectos.Generar())
 			{
 				if (string.IsNullOrEmpty(proyecto.Ubicacion) == false)

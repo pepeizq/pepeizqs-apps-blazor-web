@@ -37,7 +37,7 @@ namespace Tareas
 						{
 							BaseDatos.Tareas.ActualizarTareaUso(conexion, "github", DateTime.Now);
 
-							foreach (var proyecto in BaseDatos.Github.Todo(conexion))
+							foreach (var proyecto in await BaseDatos.Github.Todo())
 							{
 								GithubAPI api = await Github.CargarAPI(proyecto.Id);
 

@@ -8,6 +8,7 @@
     background-color: rgba(0,0,0,.2);
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 5px;
+    white-space: pre-line;
 }
 
     .noticia-div:first-child {
@@ -63,4 +64,22 @@
     .noticia-imagen-enlace:hover::after {
         opacity: 1;
         transform: scale(1.1);
+    }
+
+.noticia-boton {
+    background-color: rgba(0,0,0,.2);
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 5px;
+    color: var(--colorTexto);
+    transition: transform .25s ease;
+    padding: 12px 20px;
+    text-decoration: none;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .noticia-boton:hover {
+        transform: scale(1.05);
     }

@@ -1,17 +1,16 @@
 ﻿<footer class="pie">
     <div class="cuerpo-ancho">
         <div class="pie-principal">
-            <div class="pie-info">
+            <div>
                 <div class="pie-marca">
                     <a href="https://pepeizqapps.com/" data-enhance-nav="false">pepeizq's apps</a>
-                    <span>•</span>
                     <a href="https://pepe.deals/" target="_blank">pepe's deals</a>
                 </div>
 
                 <nav class="pie-enlaces">
                     <a href="/last-updates" target="_blank" data-enhance-nav="false">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "LastUpdates")</a>
                     <a href="/privacy" data-enhance-nav="false">@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "Privacy")</a>
-                    <a href="mailto:admin@pepe.deals">admin@pepe.deals</a>
+                    <a href="https://pepe.deals/contact">@Herramientas.Idiomas.BuscarTexto(idioma, "String6", "Index")</a>
                 </nav>
             </div>
 
@@ -66,7 +65,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        List<global::BaseDatos.GithubBaseDatos> bdGithub = BaseDatos.Github.Todo();
+        List<global::BaseDatos.GithubBaseDatos> bdGithub = await BaseDatos.Github.Todo();
 
         if (bdGithub?.Count > 0)
         {

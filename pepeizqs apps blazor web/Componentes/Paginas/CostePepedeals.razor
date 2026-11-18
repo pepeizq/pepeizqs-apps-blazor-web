@@ -1,0 +1,200 @@
+﻿@page "/cost-pepedeals"
+
+@inject IHttpContextAccessor contexto
+
+<TituloySEO titulo="@Herramientas.Idiomas.BuscarTexto(idioma, "Title", "CostPepedeals")" descripcion="@Herramientas.Idiomas.BuscarTexto(idioma, "Subtitle", "CostPepedeals")" enlace="https://pepeizqapps.com/cost-pepedeals" />
+
+<div style="padding: 50px; display: flex; flex-direction: column; gap: 40px;">
+    <div style="border-radius: 5px; overflow: hidden;">
+        <div style="font-size: 20px; padding: 20px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit; display: flex; align-items: center; gap: 30px;">
+            <div>
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String16", "CostPepedeals")
+            </div>
+        
+            <div style="@(saldo >= 0 ? "background-color: var(--fondoBien);" : "background-color: var(--fondoPeligro);") font-size: 16px; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;">
+                @saldo.ToString().Replace(".", ",") € EUR
+            </div>
+        </div>
+
+        <div style="background-color: var(--fondoEntrada); padding: 30px; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;">
+            <div>
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String1", "CostPepedeals")
+            </div>
+
+            <div style="margin-top: 30px;">
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String14", "CostPepedeals")
+            </div>
+        </div>
+    </div>
+
+    <div style="border-radius: 5px; overflow: hidden;">
+        <div style="font-size: 20px; padding: 20px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit; display: flex; align-items: center; gap: 30px;">
+            <div>
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String18", "CostPepedeals")
+            </div>
+        </div>
+
+        <div style="background-color: var(--fondoEntrada); padding: 30px; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; display: flex; flex-direction: column; gap: 15px;">        
+            @if (transacciones?.Count > 0)
+            {
+                foreach (var transaccion in transacciones)
+                {
+                    string fondoUsar = "background-color: var(--fondoBien);";
+
+                    if (transaccion.Importe < 0)
+                    {
+                        fondoUsar = "background-color: var(--fondoPeligro);";
+                    }
+
+                    string importeUsar = transaccion.Importe.ToString();
+                    importeUsar = importeUsar.Replace(".", ",");
+
+                    <div style="background-color: rgba(0,0,0,.2); border-radius: 5px; display: flex; align-items: center; gap: 20px; justify-content: space-between; padding: 10px 15px;">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="min-width: 100px; text-align: center;">
+                                @transaccion.Fecha.ToString("dd/MM/yyyy")
+                            </div>
+
+                            <div>
+                                @transaccion.Concepto.Trim()
+                            </div>
+                        </div>
+                        
+                        <div style="@fondoUsar padding: 5px 10px; min-width: 120px; text-align: center; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;">
+                            @importeUsar € EUR
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div style="border-radius: 5px; overflow: hidden;">
+        <div style="font-size: 20px; padding: 20px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit; display: flex; align-items: center; gap: 30px;">
+            <div>
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String17", "CostPepedeals")
+            </div>
+        </div>
+
+        <div style="background-color: var(--fondoEntrada); padding: 30px; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;">
+            <div style="background-color: rgba(0,0,0,.2); border: 1px solid rgba(0,0,0,.3); border-radius: 5px;">
+                <div style="background-color: rgba(0,0,0,.2); padding: 10px 15px;">
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String2", "CostPepedeals")
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 15px;">
+                    <div>
+                        @Herramientas.Idiomas.BuscarTexto(idioma, "String10", "CostPepedeals")
+                    </div>
+
+                    <a href="https://www.smarterasp.net/index?r=pepeizq" target="_blank" style="text-decoration: none;">
+                        <div>
+                            @(string.Format(Herramientas.Idiomas.BuscarTexto(idioma, "String3", "CostPepedeals"), "30/1/2027"))
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div style="background-color: rgba(0,0,0,.2); border: 1px solid rgba(0,0,0,.3); border-radius: 5px;">
+                <div style="background-color: rgba(0,0,0,.2); padding: 10px 15px;">
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String4", "CostPepedeals")
+                </div>
+        
+                <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 15px;">
+                    <div>
+                        @Herramientas.Idiomas.BuscarTexto(idioma, "String12", "CostPepedeals")
+                    </div>
+
+                    <a href="https://www.smarterasp.net/index?r=pepeizq" target="_blank" style="text-decoration: none;">
+                        <div>
+                            @string.Format(Herramientas.Idiomas.BuscarTexto(idioma, "String5", "CostPepedeals"), "5/11/2027")
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div style="background-color: rgba(0,0,0,.2); border: 1px solid rgba(0,0,0,.3); border-radius: 5px;">
+                <div style="background-color: rgba(0,0,0,.2); padding: 10px 15px;">
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String6", "CostPepedeals")
+                </div>
+               
+                <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 15px;">
+                    <div>
+                        @Herramientas.Idiomas.BuscarTexto(idioma, "String12", "CostPepedeals")
+                    </div>
+
+                    <a href="https://www.smarterasp.net/index?r=pepeizq" target="_blank" style="text-decoration: none;">
+                        <div>
+                            @string.Format(Herramientas.Idiomas.BuscarTexto(idioma, "String7", "CostPepedeals"), "22/11/2027")
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div style="background-color: rgba(0,0,0,.2); border: 1px solid rgba(0,0,0,.3); border-radius: 5px;">
+                <div style="background-color: rgba(0,0,0,.2); padding: 10px 15px;">
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String8", "CostPepedeals")
+                </div>
+             
+                <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 15px;">
+                    <div>
+                        @Herramientas.Idiomas.BuscarTexto(idioma, "String13", "CostPepedeals")
+                    </div>
+
+                    <a href="https://www.smarterasp.net/index?r=pepeizq" target="_blank" style="text-decoration: none;">
+                        <div>
+                            @string.Format(Herramientas.Idiomas.BuscarTexto(idioma, "String9", "CostPepedeals"), "22/11/2027")
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="border-radius: 5px; overflow: hidden;">
+        <div style="font-size: 20px; padding: 20px 30px; background-color: rgba(0,0,0,.4); border-top-left-radius: inherit; border-top-right-radius: inherit; display: flex; align-items: center; gap: 30px;">
+            <div>
+                @Herramientas.Idiomas.BuscarTexto(idioma, "String15", "CostPepedeals")
+            </div>
+        </div>
+
+        <div style="background-color: var(--fondoEntrada); padding: 30px; border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;">
+            <ul>
+                <li>
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String19", "CostPepedeals")
+                </li>
+                <li>
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String20", "CostPepedeals")
+                </li>
+                <li>
+                    @Herramientas.Idiomas.BuscarTexto(idioma, "String21", "CostPepedeals")
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    #nullable disable
+
+    private string idioma = "en";
+
+    private decimal saldo = 0;
+    [PersistentState] public List<BaseDatos.CostePepedeals> transacciones { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        idioma = contexto?.HttpContext?.Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+
+        transacciones = await BaseDatos.CostesPepedeals.Todo();
+
+        if (transacciones?.Count > 0)
+        {
+            foreach (var transaccion in transacciones)
+            {
+                saldo = saldo + transaccion.Importe;
+            }
+        }
+    }
+}

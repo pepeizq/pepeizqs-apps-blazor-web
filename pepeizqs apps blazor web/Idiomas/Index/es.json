@@ -7,7 +7,6 @@
   "App": "App",
   "Web": "Web",
   "Game": "Juego",
-  "Presentation": "A continuación tenéis todo el trabajo que he hecho mi tiempo libre, podéis ojear entre apps, webs o incluso juegos. Tener en cuenta que no soy ninguna empresa multimillonaria, soy una única persona que ha desarrollado absolutamente todo (incluso esta web en la que estás). ",
   "Github1": "Personalmente creo que en el código abierto y siguiendo esa filosofía todo proyecto en el que he trabajado esta disponible en mi perfil de Github.",
   "Github2": "Mi perfil:",
   "Search": "Buscar",
@@ -15,5 +14,7 @@
   "String1": "Este es mi actual proyecto que me consume la mayor parte de mi tiempo libre para desarrollar. Dada la envergadura del mismo se divide en varias fichas, por que no es solo crear una web, sino también desarrollar y mantener herramientas accesorias.",
   "String2": "Proyectos parados",
   "String3": "Por desgracia no puedo mantener activos todos mis proyectos, pero como son de código abierto podéis coger el testigo y seguir su desarrollo.",
-  "String4": "Últimas Actualizaciones"
+  "String4": "Últimas Actualizaciones",
+  "String5": "Coste de mantener todo esto",
+  "String6": "Contacto"
 }

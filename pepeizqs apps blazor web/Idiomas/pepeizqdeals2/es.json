@@ -7,5 +7,7 @@
   "String8": "Integración con Humble Store",
   "String9": "Dadas las medidas de seguridad de la tienda y su nulo soporte técnico me resultaba imposible mirar las ofertas de la tienda dentro de la web, así que tuve que crear un 'saltador de ips' para mirar las ofertas.",
   "String10": "Integración con Amazon Luna",
-  "String11": "Amazon no dispone de APIs o feeds para leer los juegos que tiene disponibles en sus planes standard y premium de Luna. Así que me toca fingir abrir un navegador web, leer los juegos disponibles y mandarlos a la base de datos de pepe.deals."
+  "String11": "Amazon no dispone de APIs o feeds para leer los juegos que tiene disponibles en sus planes standard y premium de Luna. Así que me toca fingir abrir un navegador web, leer los juegos disponibles y mandarlos a la base de datos de pepe.deals.",
+  "String12": "Integración con Epic Games Store",
+  "String13": "Debido a que Epic Games me denegó acceso a su API para leer sus ofertas, tuve que ingeniármelas para poder leerlas y debo cargarlas de manera semi automática para enviar las ofertas a pepe.deals."
 }

@@ -27,6 +27,25 @@ namespace BaseDatos
 			return null;
 		}
 
+		public static async Task<Noticia> UnaNoticiaReducida(int id)
+		{
+			string sql = "SELECT id, titulo FROM noticias WHERE id = @id";
+
+			try
+			{
+				return await Pepeizqapps.Select(async conexion =>
+				{
+					return await conexion.QueryFirstOrDefaultAsync<Noticia>(sql, new { id });
+				});
+			}
+			catch (Exception ex)
+			{
+				BaseDatos.Errores.Mensaje("Noticia Una Reducida - pepeizq's apps", ex.Message);
+			}
+
+			return null;
+		}
+
 		public static async Task<List<Noticia>> UltimasReducida(int cantidad)
 		{
 			string busqueda = "SELECT TOP " + cantidad.ToString() + " id, titulo, fecha, imagen FROM noticias ORDER BY id DESC";
